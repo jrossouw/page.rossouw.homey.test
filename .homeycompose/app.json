@@ -1,0 +1,31 @@
+{
+  "id": "page.rossouw.homey.test",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Homey Device Testing"
+  },
+  "description": {
+    "en": "Test app to debug device drivers"
+  },
+  "category": [
+    "security"
+  ],
+  "brandColor": "#FF4800",
+  "permissions": [
+    "homey:wireless:zigbee"
+  ],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Johan Rossouw",
+    "email": "johan@rossouw.page"
+  }
+}
