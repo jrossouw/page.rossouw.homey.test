@@ -1,5 +1,8 @@
 'use strict';
 
+require('inspector').open(9229, '0.0.0.0');
+// Do open debug window open this URL in Chrome chrome://inspect/
+
 const Homey = require('homey');
 
 class MyApp extends Homey.App {
