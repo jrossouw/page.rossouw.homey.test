@@ -1,13 +1,12 @@
 {
   "id": "zigbee-siren",
   "name": {
-    "en": "Siren"
+    "en": "Tuya Siren"
   },
   "class": "other",
   "capabilities": [
     "onoff",
-    "measure_battery",
-    "alarm_siren"
+    "measure_battery"
   ],
   "capabilitiesOptions": {
     "onoff": {

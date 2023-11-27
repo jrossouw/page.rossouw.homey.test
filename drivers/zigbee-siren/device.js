@@ -86,7 +86,6 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
     this.printNode();
 
     this.addCapability('measure_battery');
-    this.addCapability('alarm_battery');
 
     this.registerCapabilityListener('onoff', async (value) => {
       this.log('onoff: ', value);
@@ -192,6 +191,10 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
         this.setSettings({
           alarmtune: parsedValue?.toString(),
         });
+        break;
+      case dataPoints.TUYA_DP_BATTERY: // battery
+        this.log('received battery percentage: ', parsedValue);
+        this.reportBatteryPercentageCapacity(parsedValue);
         break;
       default:
         this.log('Not handled dp ', data.dp);
