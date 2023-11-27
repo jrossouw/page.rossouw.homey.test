@@ -11,13 +11,13 @@ const dataPoints = {
   TUYA_DP_DURATION: 7,
   TUYA_DP_ALARM: 13,
   TUYA_DP_BATTERY: 15,
-  TUYA_DP_MELODY: 21
+  TUYA_DP_MELODY: 21,
 };
 
 const volumeMapping = new Map();
-volumeMapping.set('high', { volume: 100, tuya: 0 });
-volumeMapping.set('medium', { volume: 66, tuya: 1 });
-volumeMapping.set('low', { volume: 33, tuya: 2 });
+volumeMapping.set('High', 2);
+volumeMapping.set('Medium', 1);
+volumeMapping.set('Low', 0);
 
 const melodiesMapping = new Map();
 melodiesMapping.set(0, 'Doorbell Chime');
@@ -246,6 +246,15 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
 
   processReporting(data) {
     this.log('########### Reporting: ', data);
+    const parsedValue = getDataValue(data);
+    this.log('Measured value ', parsedValue);
+    switch (data.dp) {
+      case dataPoints.TUYA_DP_ALARM:
+        this.setCapabilityValue('onoff', parsedValue).catch(this.error);
+        break;
+      default:
+        this.log('Not handled dp ', data.dp);
+    }
   }
 
   processDatapoint(data) {
