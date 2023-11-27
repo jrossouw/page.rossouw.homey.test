@@ -9,12 +9,9 @@ Cluster.addCluster(TuyaSpecificCluster);
 const dataPoints = {
   TUYA_DP_VOLUME: 5,
   TUYA_DP_DURATION: 7,
+  TUYA_DP_ALARM: 13,
   TUYA_DP_BATTERY: 15,
-  TUYA_DP_MELODY: 21,
-  NEO_DP_VOLUME: 5,
-  NEO_DP_DURATION: 7,
-  NEO_DP_BATTERY: 15, // enum
-  NEO_DP_MELODY: 21, // enum
+  TUYA_DP_MELODY: 21
 };
 
 const volumeMapping = new Map();
@@ -94,7 +91,7 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
 
     this.registerCapabilityListener('onoff', async (value) => {
       this.log('onoff: ', value);
-      await this.writeBool(1, value);
+      await this.writeBool(dataPoints.TUYA_DP_ALARM, value);
     });
 
     zclNode.endpoints[1].clusters.tuya.on('response', (value) => this.processResponse(value));
@@ -109,7 +106,7 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
       try {
         this.log('FlowCardAction Set Alarm state (', state, ') to: ', args.alarm_state);
         const alarm_state_requested = args.alarm_state != 'off/disable';
-        this.writeBool(dataPoints.NEO_DP_ALARM, alarm_state_requested);
+        this.writeBool(dataPoints.TUYA_DP_ALARM, alarm_state_requested);
       } catch (error) {
         console.log(error);
         return false;
@@ -227,44 +224,6 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
         }
         break;
 
-      case 0x69: // Neo Temperature  ( x10 )
-        this.log('Neo Temperature is ', (measuredValue / 10.0), ' C (', measuredValue, ')');
-        this.reportTemperatureCapacity(measuredValue);
-        break;
-
-      case 0x6A: // Neo Humidity Level
-        this.log('Neo Humidity Level is ', measuredValue, ' %RH (', measuredValue, ')');
-        this.reportHumidityCapacity(measuredValue);
-        break;
-
-      case 0x6B: // Neo Min Alarm Temperature -20 .. 80
-        this.log('Neo Min Alarm Temperature is ', measuredValue, '°C');
-        break;
-
-      case 0x6C: // Neo Max Alarm Temperature -20 .. 80
-        this.log('Neo Max Alarm Temperature is ', measuredValue, '°C');
-        break;
-
-      case 0x6D: // Neo Min Alarm Humidity 1..100
-        this.log('Neo Min Alarm Humidity is ', measuredValue, ' %RH');
-        break;
-
-      case 0x6E: // Neo Max Alarm Humidity 1..100
-        this.log('Neo Max Alarm Humidity is ', measuredValue, ' %RH');
-        break;
-
-      case 0x70: // Neo Temperature Unit (F 0x00, C 0x01)
-        this.log('Neo Temperature Unit is ${temperatureScaleOptions[safeToInt(fncmd).toString()]} (', measuredValue, ')');
-        break;
-
-      case 0x71: // Neo Alarm by Temperature status
-        this.log('Neo Alarm by Temperature status is ${disabledEnabledOptions[safeToInt(fncmd).toString()]} (', measuredValue, ')');
-        break;
-
-      case 0x72: // Neo Alarm by Humidity status
-        this.log('Neo Alarm by Humidity status is ${disabledEnabledOptions[safeToInt(fncmd).toString()]} (', measuredValue, ')');
-        break;
-
       case 0x73: // Neo ???
         this.log('Neo unknown parameter (x073) is ', measuredValue);
         break;
@@ -272,20 +231,6 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
         this.log('WARN: <b>NOT PROCESSED</b> Tuya cmd: dp=', dp, 'value=', measuredValue, 'descMap.data = ', data);
         break;
     }
-  }
-
-  reportHumidityCapacity(measuredValue) {
-    const humidityOffset = this.getSetting('humidity_offset') || 0;
-    const parsedValue = measuredValue;
-    this.log('measure_humidity | relative humidity: ', parsedValue, ' + humidity offset', humidityOffset);
-    this.setCapabilityValue('measure_humidity', parsedValue + humidityOffset).catch(this.error);
-  }
-
-  reportTemperatureCapacity(measuredValue) {
-    const temperatureOffset = this.getSetting('temperature_offset') || 0;
-    const parsedValue = measuredValue / 10;
-    this.log('measure_temperature | temperature: ', parsedValue, ' + temperature offset', temperatureOffset);
-    this.setCapabilityValue('measure_temperature', parsedValue + temperatureOffset).catch(this.error);
   }
 
   reportBatteryPercentageCapacity(measuredValue) {
@@ -336,18 +281,18 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
     let volumePct = -1;
     [volumeName, volumePct] = this.findVolumeByTuyaValue(volume);
     this.log('Sending alarm volume: ', volumeName, ' (', volumePct, ')');
-    this.writeEnum(dataPoints.NEO_DP_VOLUME, volume);
+    this.writeEnum(dataPoints.TUYA_DP_VOLUME, volume);
   }
 
   sendAlarmDuration(duration) {
     this.log('Sending alarm duration: ', duration, 's');
-    this.writeData32(dataPoints.NEO_DP_DURATION, duration);
+    this.writeData32(dataPoints.TUYA_DP_DURATION, duration);
   }
 
   sendAlarmTune(tune) {
     const tuneNr = Number(tune);
     this.log('Sending alarm tune: ', melodiesMapping.get(tuneNr), ' (', tuneNr, ')');
-    this.writeEnum(dataPoints.NEO_DP_MELODY, tuneNr);
+    this.writeEnum(dataPoints.TUYA_DP_MELODY, tuneNr);
   }
 
   findVolumeByTuyaValue(measuredValue) {
