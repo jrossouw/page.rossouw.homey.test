@@ -15,7 +15,7 @@
     },
     "values": [
       {
-        "id": "2",
+        "id": "0",
         "label": {
           "en": "Low",
           "nl": "Laag",
@@ -25,13 +25,13 @@
       {
         "id": "1",
         "label": {
-          "en": "Midle",
+          "en": "Middle",
           "nl": "Middelmatig",
           "de": "Mittel"
         }
       },
       {
-        "id": "0",
+        "id": "2",
         "label": {
           "en": "High (default)",
           "nl": "Hoog (standaard)",

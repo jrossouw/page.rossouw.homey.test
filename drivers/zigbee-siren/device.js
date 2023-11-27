@@ -87,7 +87,6 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
 
     this.addCapability('measure_battery');
     this.addCapability('alarm_battery');
-    this.addCapability('alarm_siren');
 
     this.registerCapabilityListener('onoff', async (value) => {
       this.log('onoff: ', value);
@@ -149,88 +148,9 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
   }
 
   async processResponse(data) {
-    const { dp } = data;
-    const measuredValue = getDataValue(data);
-    const parsedValue = 0;
-
-    // see https://raw.githubusercontent.com/kkossev/Hubitat/main/Drivers/Tuya%20Smart%20Siren%20Zigbee/Tuya%20Smart%20Siren%20Zigbee.groovy
-    // and https://github.com/zigpy/zha-device-handlers/blob/dev/zhaquirks/tuya/ts0601_siren.py
-    switch (dp) {
-      case 0x74: // Neo Alarm Volume [0, 1, 2]
-        this.log('received Neo Alarm Volume is (', measuredValue, ')');
-      case dataPoints.TUYA_DP_VOLUME: // (05) volume [ENUM] 0:high 1:mid 2:low
-        let volumeName = 'unknown';
-        let volumePct = -1;
-        [volumeName, volumePct] = this.findVolumeByTuyaValue(measuredValue);
-        this.log('confirmed volume: ', volumeName, ' (', volumePct, ')');
-        await this.setSettings({
-          alarmvolume: measuredValue?.toString(),
-        });
-        break;
-
-      case 0x67: // Neo Alarm Duration 0..1800 seconds
-        this.log('received Neo Alarm duration', measuredValue);
-      case dataPoints.TUYA_DP_DURATION: // (07) duration [VALUE] in seconds
-        this.log('confirmed duration', measuredValue, 's');
-        this.setSettings({
-          alarmsoundtime: measuredValue,
-        });
-        break;
-
-      case 0x68: // Neo Alarm On 0x01 Off 0x00
-        this.log('received Neo Alarm status is ', measuredValue);
-      case dataPoints.TUYA_DP_ALARM: // (13) alarm [BOOL]
-        const value = measuredValue == 0 ? 'off' : 'on';
-        this.log('confirmed alarm state ', value, ' ', measuredValue);
-        this.setCapabilityValue('alarm_siren', measuredValue);
-        break;
-
-      case dataPoints.TUYA_DP_BATTERY: // (15) battery [VALUE] percentage
-        this.log('received battery percentage: ', value, ' ', measuredValue);
-        this.reportBatteryPercentageCapacity(measuredValue);
-        break;
-
-      case 0x66: // Neo Alarm Melody 0..17
-        this.log('received Neo Alarm melody ', measuredValue);
-      case dataPoints.TUYA_DP_MELODY: // (21) melody [enum] 0..17
-        this.log('confirmed melody: ', melodiesMapping.get(measuredValue), '(', measuredValue, ')');
-        this.setSettings({
-          alarmtune: measuredValue?.toString(),
-        });
-        break;
-
-      case 0x65: // Neo Power Mode  ['battery_full':0, 'battery_high':1, 'battery_medium':2, 'battery_low':3, 'usb':4]
-        switch (measuredValue) {
-          case 0:
-            this.log('Neo Power Mode is: battery_full - ', measuredValue);
-            this.reportAlarmBatteryCapacity(false);
-            break;
-          case 1:
-            this.log('Neo Power Mode is: battery_high - ', measuredValue);
-            this.reportAlarmBatteryCapacity(false);
-            break;
-          case 2:
-            this.log('Neo Power Mode is: battery_medium - ', measuredValue);
-            this.reportAlarmBatteryCapacity(false);
-            break;
-          case 3:
-            this.log('Neo Power Mode is: battery_low - ', measuredValue);
-            this.reportAlarmBatteryCapacity(true);
-            break;
-          case 4:
-            this.log('Neo Power Mode is: usb - ', measuredValue);
-            this.reportAlarmBatteryCapacity(false);
-            break;
-        }
-        break;
-
-      case 0x73: // Neo ???
-        this.log('Neo unknown parameter (x073) is ', measuredValue);
-        break;
-      default:
-        this.log('WARN: <b>NOT PROCESSED</b> Tuya cmd: dp=', dp, 'value=', measuredValue, 'descMap.data = ', data);
-        break;
-    }
+    this.log('########### Response: ', data);
+    const parsedValue = getDataValue(data);
+    this.log('Parsed value ', parsedValue);
   }
 
   reportBatteryPercentageCapacity(measuredValue) {
@@ -247,10 +167,31 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
   processReporting(data) {
     this.log('########### Reporting: ', data);
     const parsedValue = getDataValue(data);
-    this.log('Measured value ', parsedValue);
+    this.log('Parsed value ', parsedValue);
     switch (data.dp) {
       case dataPoints.TUYA_DP_ALARM:
         this.setCapabilityValue('onoff', parsedValue).catch(this.error);
+        break;
+      case dataPoints.TUYA_DP_VOLUME: // (05) volume [ENUM] 0:high 1:mid 2:low
+        let volumeName = 'unknown';
+        let volumePct = -1;
+        [volumeName, volumePct] = this.findVolumeByTuyaValue(parsedValue);
+        this.log('confirmed volume: ', volumeName, ' (', volumePct, ')');
+        this.setSettings({
+          alarmvolume: parsedValue?.toString(),
+        });
+        break;
+      case dataPoints.TUYA_DP_DURATION: // (07) duration [VALUE] in seconds
+        this.log('confirmed duration', parsedValue, 's');
+        this.setSettings({
+          alarmsoundtime: parsedValue,
+        });
+        break;
+      case dataPoints.TUYA_DP_MELODY: // (21) melody [enum] 0..17
+        this.log('confirmed melody: ', melodiesMapping.get(parsedValue), '(', parsedValue, ')');
+        this.setSettings({
+          alarmtune: parsedValue?.toString(),
+        });
         break;
       default:
         this.log('Not handled dp ', data.dp);
@@ -259,10 +200,12 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
 
   processDatapoint(data) {
     this.log('########### Datapoint: ', data);
+    const parsedValue = getDataValue(data);
+    this.log('Parsed value ', parsedValue);
   }
 
   onDeleted() {
-    this.log('sensortemphumidsensor removed');
+    this.log('ZigbeeSiren removed');
   }
 
   async onSettings({ oldSettings, newSettings, changedKeys }) {
@@ -308,9 +251,9 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
     let volumeName = 'unknown';
     let volumePct = -1;
     volumeMapping.forEach((v, k) => {
-      if (v.tuya == measuredValue) {
+      if (v === measuredValue) {
         volumeName = k;
-        volumePct = v.volume;
+        volumePct = v;
       }
     });
     return [volumeName, volumePct];
