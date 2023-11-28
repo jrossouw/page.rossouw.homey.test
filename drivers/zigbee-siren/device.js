@@ -112,25 +112,20 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
 
     const actionSirenVolume = this.homey.flow.getActionCard('siren_volume');
     actionSirenVolume.registerRunListener(async (args, state) => {
-      this.log('Arguments: ', args);
-      this.log('State: ', state);
       this.log('FlowCardAction Set Alarm volume to: ', args.siren_volume);
-      this.sendAlarmVolume(args.siren_volume);
+      args.device.sendAlarmVolume(args.siren_volume);
     });
 
     const actionAlarmDuration = this.homey.flow.getActionCard('alarm_duration');
     actionAlarmDuration.registerRunListener(async (args, state) => {
       this.log('FlowCardAction Set Alarm Duration to: ', args.duration);
-      this.sendAlarmDuration(args.duration);
+      args.device.sendAlarmDuration(args.duration);
     });
 
     const actionAlarmTune = this.homey.flow.getActionCard('alarm_tune');
     actionAlarmTune.registerRunListener(async (args, state) => {
-      this.log('This: ', this);
-      this.log('Arguments: ', args);
-      this.log('State: ', state);
       this.log('FlowCardAction Set Alarm Tune to: ', args.alarm_tune);
-      this.sendAlarmTune(args.alarm_tune);
+      args.device.sendAlarmTune(args.alarm_tune);
     });
   }
 
