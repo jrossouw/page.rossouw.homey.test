@@ -93,57 +93,45 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
     });
 
     zclNode.endpoints[1].clusters.tuya.on('response', (value) => this.processResponse(value));
-
     zclNode.endpoints[1].clusters.tuya.on('reporting', (value) => this.processReporting(value));
-
     zclNode.endpoints[1].clusters.tuya.on('datapoint', (value) => this.processDatapoint(value));
 
-    //= ==== CONTROL Binary Switch
-    // define FlowCardAction to set the Switch
-    const alarm_state_run_listener = async (args, state) => {
+    this.log('Register action card listeners for node: ', this);
+    const actionAlarmState = this.homey.flow.getActionCard('alarm_state');
+    actionAlarmState.registerRunListener(async (args, state) => {
       try {
         this.log('FlowCardAction Set Alarm state (', state, ') to: ', args.alarm_state);
-        const alarm_state_requested = args.alarm_state != 'off/disable';
-        this.writeBool(dataPoints.TUYA_DP_ALARM, alarm_state_requested);
+        const alarmStateRequested = args.alarm_state !== 'off/disable';
+        await this.writeBool(dataPoints.TUYA_DP_ALARM, alarmStateRequested);
       } catch (error) {
-        console.log(error);
+        this.log(error);
         return false;
       }
       return true;
-    };
+    });
 
-    // Register Action card card trigger
-    const action_alarm_state = this.homey.flow.getActionCard('alarm_state');
-    action_alarm_state.registerRunListener(alarm_state_run_listener);
-
-    // Register Flow card trigger
-    const sirenFlowTrigger = this.homey.flow.getDeviceTriggerCard('alarm_siren');
-    sirenFlowTrigger.registerRunListener(alarm_state_run_listener);
-
-    // Cards that change device settings
-    //= ==== CONTROL Alarm Volume:
-    const siren_volume_run_listener = async (args) => {
+    const actionSirenVolume = this.homey.flow.getActionCard('siren_volume');
+    actionSirenVolume.registerRunListener(async (args, state) => {
+      this.log('Arguments: ', args);
+      this.log('State: ', state);
       this.log('FlowCardAction Set Alarm volume to: ', args.siren_volume);
       this.sendAlarmVolume(args.siren_volume);
-    };
-    const action_siren_volume = this.homey.flow.getActionCard('siren_volume');
-    action_siren_volume.registerRunListener(siren_volume_run_listener);
+    });
 
-    //= ==== CONTROL Alarm Sound Duration:
-    const alarm_duration_run_listener = async (args) => {
+    const actionAlarmDuration = this.homey.flow.getActionCard('alarm_duration');
+    actionAlarmDuration.registerRunListener(async (args, state) => {
       this.log('FlowCardAction Set Alarm Duration to: ', args.duration);
       this.sendAlarmDuration(args.duration);
-    };
-    const action_alarm_duration = this.homey.flow.getActionCard('alarm_duration');
-    action_alarm_duration.registerRunListener(alarm_duration_run_listener);
+    });
 
-    //= ==== CONTROL Alarm Tune:
-    const alarm_tune_run_listener = async (args) => {
+    const actionAlarmTune = this.homey.flow.getActionCard('alarm_tune');
+    actionAlarmTune.registerRunListener(async (args, state) => {
+      this.log('This: ', this);
+      this.log('Arguments: ', args);
+      this.log('State: ', state);
       this.log('FlowCardAction Set Alarm Tune to: ', args.alarm_tune);
       this.sendAlarmTune(args.alarm_tune);
-    };
-    const action_alarm_tune = this.homey.flow.getActionCard('alarm_tune');
-    action_alarm_tune.registerRunListener(alarm_tune_run_listener);
+    });
   }
 
   async processResponse(data) {
@@ -152,18 +140,7 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
     this.log('Parsed value ', parsedValue);
   }
 
-  reportBatteryPercentageCapacity(measuredValue) {
-    const parsedValue = measuredValue;
-    this.log('measure_battery | battery percentage remaining: ', parsedValue, '%');
-    this.setCapabilityValue('measure_battery', parsedValue).catch(this.error);
-  }
-
-  reportAlarmBatteryCapacity(measuredValue) { // true or false
-    this.log('alarm_battery | battery alarm: ', measuredValue);
-    this.setCapabilityValue('alarm_battery', measuredValue).catch(this.error);
-  }
-
-  processReporting(data) {
+  async processReporting(data) {
     this.log('########### Reporting: ', data);
     const parsedValue = getDataValue(data);
     this.log('DP ', data.dp, ' with parsed value ', parsedValue);
@@ -173,9 +150,7 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
         this.setCapabilityValue('onoff', parsedValue).catch(this.error);
         break;
       case dataPoints.TUYA_DP_VOLUME: // (05) volume [ENUM] 0:high 1:mid 2:low
-        let volumeName = 'unknown';
-        volumeName = this.findVolumeByTuyaValue(parsedValue);
-        this.log('Volume updated: ', volumeName, ' (', parsedValue, ')');
+        this.log('Volume updated: ', volumeMapping.get(Number(parsedValue)), ' (', parsedValue, ')');
         this.setSettings({
           alarmvolume: parsedValue?.toString(),
         });
@@ -194,14 +169,14 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
         break;
       case dataPoints.TUYA_DP_BATTERY: // battery
         this.log('Received battery percentage: ', parsedValue, '%');
-        this.reportBatteryPercentageCapacity(parsedValue);
+        this.setCapabilityValue('measure_battery', parsedValue).catch(this.error);
         break;
       default:
         this.log('DP ', data.dp, ' not handled!');
     }
   }
 
-  processDatapoint(data) {
+  async processDatapoint(data) {
     this.log('########### Datapoint: ', data);
     const parsedValue = getDataValue(data);
     this.log('Parsed value ', parsedValue);
@@ -232,8 +207,7 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
   }
 
   sendAlarmVolume(volume) { // (05) volume [ENUM] 0:high 1:mid 2:low
-    let volumeName = 'unknown';
-    volumeName = this.findVolumeByTuyaValue(volume);
+    const volumeName = volumeMapping.get(Number(volume));
     this.log('Sending alarm volume: ', volumeName, ' (', volume, ')');
     this.writeEnum(dataPoints.TUYA_DP_VOLUME, volume);
   }
@@ -247,10 +221,6 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
     const tuneNr = Number(tune);
     this.log('Sending alarm tune: ', melodiesMapping.get(tuneNr), ' (', tuneNr, ')');
     this.writeEnum(dataPoints.TUYA_DP_MELODY, tuneNr);
-  }
-
-  findVolumeByTuyaValue(measuredValue) {
-    return volumeMapping.get(Number(measuredValue));
   }
 
 }

@@ -228,15 +228,15 @@
               {
                 "id": "0",
                 "label": {
-                  "en": "Doorbell 1",
-                  "nl": "Doorbell 1",
-                  "de": "Doorbell 1"
+                  "en": "Doorbell Chime",
+                  "nl": "Doorbell Chime",
+                  "de": "Doorbell Chime"
                 }
               },
               {
                 "id": "1",
                 "label": {
-                  "en": "For Elise (default)",
+                  "en": "Fur Elise (default)",
                   "nl": "Fur Elise (standaard)",
                   "de": "Fur Elise (Standard)"
                 }
@@ -244,101 +244,77 @@
               {
                 "id": "2",
                 "label": {
-                  "en": "Westminster",
-                  "nl": "Westminster",
-                  "de": "Westminster"
+                  "en": "Westminster Chimes",
+                  "nl": "Westminster Chimes",
+                  "de": "Westminster Chimes"
                 }
               },
               {
                 "id": "3",
                 "label": {
-                  "en": "4 Key Chime",
-                  "nl": "4 Key Chime",
-                  "de": "4 Key Chime"
+                  "en": "Fast double door bell",
+                  "nl": "Fast double door bell",
+                  "de": "Fast double door bell"
                 }
               },
               {
                 "id": "4",
                 "label": {
-                  "en": "William Tell",
-                  "nl": "William Tell",
-                  "de": "William Tell"
+                  "en": "William Tell Overture",
+                  "nl": "William Tell Overture",
+                  "de": "William Tell Overture"
                 }
               },
               {
                 "id": "5",
                 "label": {
-                  "en": "Mozart Piano",
-                  "nl": "Mozart Piano",
-                  "de": "Mozart Piano"
+                  "en": "Turkish March",
+                  "nl": "Turkish March",
+                  "de": "Turkish March"
                 }
               },
               {
                 "id": "6",
                 "label": {
-                  "en": "Space Alarm",
-                  "nl": "Space Alarm",
-                  "de": "Space Alarm"
+                  "en": "Safe/Security Alarm",
+                  "nl": "Safe/Security Alarm",
+                  "de": "Safe/Security Alarm"
                 }
               },
               {
                 "id": "7",
                 "label": {
-                  "en": "Klaxon",
-                  "nl": "Klaxon",
-                  "de": "Klaxon"
+                  "en": "Chemical Spill Alert",
+                  "nl": "Chemical Spill Alert",
+                  "de": "Chemical Spill Alert"
                 }
               },
               {
                 "id": "8",
                 "label": {
-                  "en": "Meep meep",
-                  "nl": "Meep meep",
-                  "de": "Meep meep"
+                  "en": "Piercing Alarm Clock",
+                  "nl": "Piercing Alarm Clock",
+                  "de": "Piercing Alarm Clock"
                 }
               },
               {
                 "id": "9",
                 "label": {
-                  "en": "Wheep",
-                  "nl": "Wheep",
-                  "de": "Wheep"
+                  "en": "Smoke Alarm",
+                  "nl": "Smoke Alarm",
+                  "de": "Smoke Alarm"
                 }
               },
               {
                 "id": "10",
                 "label": {
-                  "en": "Barking dog",
-                  "nl": "Barking dog",
-                  "de": "Barking dog"
+                  "en": "Dog Barking",
+                  "nl": "Dog Barking",
+                  "de": "Dog Barking"
                 }
               },
               {
                 "id": "11",
-                "label": {
-                  "en": "Alarm Siren",
-                  "nl": "Alarm Siren",
-                  "de": "Alarm Siren"
-                }
-              },
-              {
-                "id": "12",
-                "label": {
-                  "en": "Doorbell 2",
-                  "nl": "Doorbell 2",
-                  "de": "Doorbell 2"
-                }
-              },
-              {
-                "id": "13",
-                "label": {
-                  "en": "Old Phone",
-                  "nl": "Old Phone",
-                  "de": "Old Phone"
-                }
-              },
-              {
-                "id": "14",
                 "label": {
                   "en": "Police Siren",
                   "nl": "Police Siren",
@@ -346,27 +322,51 @@
                 }
               },
               {
+                "id": "12",
+                "label": {
+                  "en": "Doorbell Chime (reverb)",
+                  "nl": "Doorbell Chime (reverb)",
+                  "de": "Doorbell Chime (reverb)"
+                }
+              },
+              {
+                "id": "13",
+                "label": {
+                  "en": "Mechanical Telephone",
+                  "nl": "Mechanical Telephone",
+                  "de": "Mechanical Telephone"
+                }
+              },
+              {
+                "id": "14",
+                "label": {
+                  "en": "Fire/Ambulance",
+                  "nl": "Fire/Ambulance",
+                  "de": "Fire/Ambulance"
+                }
+              },
+              {
                 "id": "15",
                 "label": {
-                  "en": "Evacuation bell",
-                  "nl": "Evacuation bell",
-                  "de": "Evacuation bell"
+                  "en": "3/1 Elevator",
+                  "nl": "3/1 Elevator",
+                  "de": "3/1 Elevator"
                 }
               },
               {
                 "id": "16",
                 "label": {
-                  "en": "Clock alarm",
-                  "nl": "Clock alarm",
-                  "de": "Clock alarm"
+                  "en": "Buzzing Alarm Clock",
+                  "nl": "Buzzing Alarm Clock",
+                  "de": "Buzzing Alarm Clock"
                 }
               },
               {
                 "id": "17",
                 "label": {
-                  "en": "Fire alarm",
-                  "nl": "Fire alarm",
-                  "de": "Fire alarm"
+                  "en": "School Bell",
+                  "nl": "School Bell",
+                  "de": "School Bell"
                 }
               }
             ]
@@ -520,8 +520,8 @@
               "id": "0",
               "label": {
                 "en": "Doorbell Chime",
-                "nl": "Doorbell 1",
-                "de": "Doorbell 1"
+                "nl": "Doorbell Chime",
+                "de": "Doorbell Chime"
               }
             },
             {
@@ -536,128 +536,128 @@
               "id": "2",
               "label": {
                 "en": "Westminster Chimes",
-                "nl": "Westminster",
-                "de": "Westminster"
+                "nl": "Westminster Chimes",
+                "de": "Westminster Chimes"
               }
             },
             {
               "id": "3",
               "label": {
                 "en": "Fast double door bell",
-                "nl": "4 Key Chime",
-                "de": "4 Key Chime"
+                "nl": "Fast double door bell",
+                "de": "Fast double door bell"
               }
             },
             {
               "id": "4",
               "label": {
                 "en": "William Tell Overture",
-                "nl": "William Tell",
-                "de": "William Tell"
+                "nl": "William Tell Overture",
+                "de": "William Tell Overture"
               }
             },
             {
               "id": "5",
               "label": {
                 "en": "Turkish March",
-                "nl": "Mozart Piano",
-                "de": "Mozart Piano"
+                "nl": "Turkish March",
+                "de": "Turkish March"
               }
             },
             {
               "id": "6",
               "label": {
                 "en": "Safe/Security Alarm",
-                "nl": "Space Alarm",
-                "de": "Space Alarm"
+                "nl": "Safe/Security Alarm",
+                "de": "Safe/Security Alarm"
               }
             },
             {
               "id": "7",
               "label": {
                 "en": "Chemical Spill Alert",
-                "nl": "Klaxon",
-                "de": "Klaxon"
+                "nl": "Chemical Spill Alert",
+                "de": "Chemical Spill Alert"
               }
             },
             {
               "id": "8",
               "label": {
                 "en": "Piercing Alarm Clock",
-                "nl": "Meep meep",
-                "de": "Meep meep"
+                "nl": "Piercing Alarm Clock",
+                "de": "Piercing Alarm Clock"
               }
             },
             {
               "id": "9",
               "label": {
                 "en": "Smoke Alarm",
-                "nl": "Wheep",
-                "de": "Wheep"
+                "nl": "Smoke Alarm",
+                "de": "Smoke Alarm"
               }
             },
             {
               "id": "10",
               "label": {
                 "en": "Dog Barking",
-                "nl": "Barking dog",
-                "de": "Barking dog"
+                "nl": "Dog Barking",
+                "de": "Dog Barking"
               }
             },
             {
               "id": "11",
               "label": {
                 "en": "Police Siren",
-                "nl": "Alarm Siren",
-                "de": "Alarm Siren"
+                "nl": "Police Siren",
+                "de": "Police Siren"
               }
             },
             {
               "id": "12",
               "label": {
                 "en": "Doorbell Chime (reverb)",
-                "nl": "Doorbell 2",
-                "de": "Doorbell 2"
+                "nl": "Doorbell Chime (reverb)",
+                "de": "Doorbell Chime (reverb)"
               }
             },
             {
               "id": "13",
               "label": {
                 "en": "Mechanical Telephone",
-                "nl": "Old Phone",
-                "de": "Old Phone"
+                "nl": "Mechanical Telephone",
+                "de": "Mechanical Telephone"
               }
             },
             {
               "id": "14",
               "label": {
                 "en": "Fire/Ambulance",
-                "nl": "Police Siren",
-                "de": "Police Siren"
+                "nl": "Fire/Ambulance",
+                "de": "Fire/Ambulance"
               }
             },
             {
               "id": "15",
               "label": {
                 "en": "3/1 Elevator",
-                "nl": "Evacuation bell",
-                "de": "Evacuation bell"
+                "nl": "3/1 Elevator",
+                "de": "3/1 Elevator"
               }
             },
             {
               "id": "16",
               "label": {
                 "en": "Buzzing Alarm Clock",
-                "nl": "Clock alarm",
-                "de": "Clock alarm"
+                "nl": "Buzzing Alarm Clock",
+                "de": "Buzzing Alarm Clock"
               }
             },
             {
               "id": "17",
               "label": {
                 "en": "School Bell",
-                "nl": "Fire alarm",
-                "de": "Fire alarm"
+                "nl": "School Bell",
+                "de": "School Bell"
               }
             }
           ]
