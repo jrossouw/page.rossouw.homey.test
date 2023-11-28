@@ -15,9 +15,9 @@ const dataPoints = {
 };
 
 const volumeMapping = new Map();
-volumeMapping.set('High', 2);
-volumeMapping.set('Medium', 1);
-volumeMapping.set('Low', 0);
+volumeMapping.set(0, 'Low');
+volumeMapping.set(1, 'Medium');
+volumeMapping.set(2, 'High');
 
 const melodiesMapping = new Map();
 melodiesMapping.set(0, 'Doorbell Chime');
@@ -166,38 +166,38 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
   processReporting(data) {
     this.log('########### Reporting: ', data);
     const parsedValue = getDataValue(data);
-    this.log('Parsed value ', parsedValue);
+    this.log('DP ', data.dp, ' with parsed value ', parsedValue);
     switch (data.dp) {
       case dataPoints.TUYA_DP_ALARM:
+        this.log('Alarm state update: ', parsedValue);
         this.setCapabilityValue('onoff', parsedValue).catch(this.error);
         break;
       case dataPoints.TUYA_DP_VOLUME: // (05) volume [ENUM] 0:high 1:mid 2:low
         let volumeName = 'unknown';
-        let volumePct = -1;
-        [volumeName, volumePct] = this.findVolumeByTuyaValue(parsedValue);
-        this.log('confirmed volume: ', volumeName, ' (', volumePct, ')');
+        volumeName = this.findVolumeByTuyaValue(parsedValue);
+        this.log('Volume updated: ', volumeName, ' (', parsedValue, ')');
         this.setSettings({
           alarmvolume: parsedValue?.toString(),
         });
         break;
       case dataPoints.TUYA_DP_DURATION: // (07) duration [VALUE] in seconds
-        this.log('confirmed duration', parsedValue, 's');
+        this.log('Duration updated:', parsedValue, 's');
         this.setSettings({
           alarmsoundtime: parsedValue,
         });
         break;
       case dataPoints.TUYA_DP_MELODY: // (21) melody [enum] 0..17
-        this.log('confirmed melody: ', melodiesMapping.get(parsedValue), '(', parsedValue, ')');
+        this.log('Melody updated: ', melodiesMapping.get(parsedValue), '(', parsedValue, ')');
         this.setSettings({
           alarmtune: parsedValue?.toString(),
         });
         break;
       case dataPoints.TUYA_DP_BATTERY: // battery
-        this.log('received battery percentage: ', parsedValue);
+        this.log('Received battery percentage: ', parsedValue, '%');
         this.reportBatteryPercentageCapacity(parsedValue);
         break;
       default:
-        this.log('Not handled dp ', data.dp);
+        this.log('DP ', data.dp, ' not handled!');
     }
   }
 
@@ -233,9 +233,8 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
 
   sendAlarmVolume(volume) { // (05) volume [ENUM] 0:high 1:mid 2:low
     let volumeName = 'unknown';
-    let volumePct = -1;
-    [volumeName, volumePct] = this.findVolumeByTuyaValue(volume);
-    this.log('Sending alarm volume: ', volumeName, ' (', volumePct, ')');
+    volumeName = this.findVolumeByTuyaValue(volume);
+    this.log('Sending alarm volume: ', volumeName, ' (', volume, ')');
     this.writeEnum(dataPoints.TUYA_DP_VOLUME, volume);
   }
 
@@ -251,15 +250,7 @@ class ZigbeeSiren extends TuyaSpecificClusterDevice {
   }
 
   findVolumeByTuyaValue(measuredValue) {
-    let volumeName = 'unknown';
-    let volumePct = -1;
-    volumeMapping.forEach((v, k) => {
-      if (v === measuredValue) {
-        volumeName = k;
-        volumePct = v;
-      }
-    });
-    return [volumeName, volumePct];
+    return volumeMapping.get(Number(measuredValue));
   }
 
 }
