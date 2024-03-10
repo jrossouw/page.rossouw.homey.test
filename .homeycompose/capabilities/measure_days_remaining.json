@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Days Remaining"
+  },
+  "units": {
+    "en": "days"
+  },
+  "desc": {
+    "en": "Estimated number of days remaining"
+  },
+  "decimals": 1,
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/capability_icons/timer.svg"
+}

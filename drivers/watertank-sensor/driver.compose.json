@@ -1,0 +1,77 @@
+{
+  "id": "TankMonitor",
+  "name": {
+    "en": "Virtual Tank Sensor"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "measure_water_level",
+    "measure_capacity",
+    "measure_volume",
+    "alarm_low_level"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": ["lan"],
+  "pair": [
+    {
+      "id": "list_my_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_my_devices" }
+    },
+    {
+      "id": "add_my_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "energy": {
+    "approximation": {
+      "usageOn": 0,
+      "usageOff": 0
+    }
+  },
+  "settings": [
+    {
+      "id": "tank_diameter",
+      "type": "number",
+      "label": {
+        "en": "Tank diameter (meters)"
+      },
+      "value": 3.5,
+      "hint": {
+        "en": "Set the tank diameter"
+      },
+      "attr": { "min": 1,"max": 255 }
+    },
+    {
+      "id": "tank_full_level",
+      "type": "number",
+      "label": {
+        "en": "Tank full level (cm)"
+      },
+      "value": 200,
+      "hint": {
+        "en": "Set the overflow  water level in cm"
+      },
+      "attr": { "min": 1,"max": 500 }
+    },
+    {
+      "id": "tank_low_level",
+      "type": "number",
+      "label": {
+        "en": "Tank low level (cm)"
+      },
+      "value": 10,
+      "hint": {
+        "en": "Set the lowest usable water level in cm"
+      },
+      "attr": { "min": 0,"max": 500 }
+    }
+  ]
+}

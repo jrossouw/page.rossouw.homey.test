@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Volume"
+  },
+  "units": {
+    "en": "Litres"
+  },
+  "desc": {
+    "en": "Water volume"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/capability_icons/measure_volume.svg"
+}

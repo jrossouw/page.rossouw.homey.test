@@ -28,34 +28,267 @@
     "email": "johan@rossouw.page"
   },
   "flow": {
-    "triggers": [
+    "actions": [
       {
-        "id": "alarm_siren",
+        "id": "consumption_rate",
         "title": {
-          "en": "Siren Alarm",
-          "nl": "Sirene Alarm",
-          "de": "Sirenenalarm"
+          "en": "Set the daily consumption rate"
         },
         "titleFormatted": {
-          "en": "Siren Alarm",
-          "nl": "Sirene Alarm",
-          "de": "Sirenenalarm"
-        },
-        "hint": {
-          "en": "This card will trigger when siren is activated.",
-          "nl": "Deze kaart wordt alleen geactiveerd wanneer de sirene actief is.",
-          "de": "Diese Karte wird ausgelöst, wenn die Sirene aktiviert wird."
+          "en": "Set daily consumption rate to [[rate]]"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=zigbee-siren"
+            "filter": "driver_id=watertank-monitor"
+          },
+          {
+            "type": "number",
+            "name": "rate",
+            "min": 0,
+            "max": 100,
+            "step": 0.1,
+            "label": {
+              "en": "cm/d"
+            },
+            "placeholder": {
+              "en": "0.5"
+            },
+            "title": {
+              "en": "Daily consumption rate in cm"
+            }
           }
         ]
-      }
-    ],
-    "actions": [
+      },
+      {
+        "id": "depth",
+        "title": {
+          "en": "Set the current depth in cm"
+        },
+        "titleFormatted": {
+          "en": "Set current depth to [[depth]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-monitor"
+          },
+          {
+            "type": "number",
+            "name": "depth",
+            "min": 0,
+            "max": 1000,
+            "step": 0.1,
+            "label": {
+              "en": "cm"
+            },
+            "placeholder": {
+              "en": "0"
+            },
+            "title": {
+              "en": "Water depth in cm"
+            }
+          }
+        ]
+      },
+      {
+        "id": "days_left",
+        "title": {
+          "en": "Number of days of water left at current consumption rate"
+        },
+        "titleFormatted": {
+          "en": "Set number of days of water left to [[days]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-monitor"
+          },
+          {
+            "type": "number",
+            "name": "days",
+            "min": 0,
+            "max": 366,
+            "step": 1,
+            "label": {
+              "en": "days"
+            },
+            "placeholder": {
+              "en": "0"
+            },
+            "title": {
+              "en": "Days of water left"
+            }
+          }
+        ]
+      },
+      {
+        "id": "low_level_alarm",
+        "title": {
+          "en": "Water low level alarm"
+        },
+        "titleFormatted": {
+          "en": "Set the water low level alarm to [[alarm_setting]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-monitor"
+          },
+          {
+            "name": "alarm_setting",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "off",
+                "label": {
+                  "en": "Disarmed"
+                }
+              },
+              {
+                "id": "on",
+                "label": {
+                  "en": "Armed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "water_sensor_water_level",
+        "title": {
+          "en": "Set the water level"
+        },
+        "titleFormatted": {
+          "en": "Set the water level [[water_level]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-sensor"
+          },
+          {
+            "type": "number",
+            "name": "water_level",
+            "min": 0,
+            "max": 500,
+            "step": 0.1,
+            "label": {
+              "en": "cm"
+            },
+            "placeholder": {
+              "en": "0.5"
+            },
+            "title": {
+              "en": "Water level in cm"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water_sensor_volume",
+        "title": {
+          "en": "Set the water volume"
+        },
+        "titleFormatted": {
+          "en": "Set the water volume to [[volume]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-sensor"
+          },
+          {
+            "type": "number",
+            "name": "volume",
+            "min": 0,
+            "max": 1000000,
+            "step": 1,
+            "label": {
+              "en": "liters"
+            },
+            "placeholder": {
+              "en": "1"
+            },
+            "title": {
+              "en": "Water volume in liters"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water_sensor_capacity",
+        "title": {
+          "en": "Set the current tank capacity"
+        },
+        "titleFormatted": {
+          "en": "Set current capacity to [[capacity]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-sensor"
+          },
+          {
+            "type": "number",
+            "name": "capacity",
+            "min": 0,
+            "max": 100,
+            "step": 0.1,
+            "label": {
+              "en": "%"
+            },
+            "placeholder": {
+              "en": "0"
+            },
+            "title": {
+              "en": "Tank capacity"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water_sensor_low_level_alarm",
+        "title": {
+          "en": "Water low level alarm"
+        },
+        "titleFormatted": {
+          "en": "Set the water low level alarm to [[alarm_setting]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watertank-sensor"
+          },
+          {
+            "name": "alarm_setting",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "off",
+                "label": {
+                  "en": "Disarmed"
+                }
+              },
+              {
+                "id": "on",
+                "label": {
+                  "en": "Armed"
+                }
+              }
+            ]
+          }
+        ]
+      },
       {
         "id": "alarm_state",
         "title": {
@@ -373,9 +606,244 @@
           }
         ]
       }
+    ],
+    "triggers": [
+      {
+        "id": "alarm_siren",
+        "title": {
+          "en": "Siren Alarm",
+          "nl": "Sirene Alarm",
+          "de": "Sirenenalarm"
+        },
+        "titleFormatted": {
+          "en": "Siren Alarm",
+          "nl": "Sirene Alarm",
+          "de": "Sirenenalarm"
+        },
+        "hint": {
+          "en": "This card will trigger when siren is activated.",
+          "nl": "Deze kaart wordt alleen geactiveerd wanneer de sirene actief is.",
+          "de": "Diese Karte wird ausgelöst, wenn die Sirene aktiviert wird."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=zigbee-siren"
+          }
+        ]
+      }
     ]
   },
   "drivers": [
+    {
+      "id": "watertank-monitor",
+      "name": {
+        "en": "Virtual Tank Monitor "
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_consumption_rate",
+        "measure_depth",
+        "measure_days_remaining",
+        "alarm_low_level"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_my_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_my_devices"
+          }
+        },
+        {
+          "id": "add_my_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/watertank-monitor/assets/images/small.png",
+        "large": "/drivers/watertank-monitor/assets/images/large.png",
+        "xlarge": "/drivers/watertank-monitor/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      }
+    },
+    {
+      "id": "watertank-sensor",
+      "name": {
+        "en": "Virtual Tank Sensor"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_water_level",
+        "measure_capacity",
+        "measure_volume",
+        "alarm_low_level"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_my_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_my_devices"
+          }
+        },
+        {
+          "id": "add_my_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/watertank-sensor/assets/images/small.png",
+        "large": "/drivers/watertank-sensor/assets/images/large.png",
+        "xlarge": "/drivers/watertank-sensor/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      },
+      "settings": [
+        {
+          "id": "tank_diameter",
+          "type": "number",
+          "label": {
+            "en": "Tank diameter (meters)"
+          },
+          "value": 3.5,
+          "hint": {
+            "en": "Set the tank diameter"
+          },
+          "attr": {
+            "min": 1,
+            "max": 255
+          }
+        },
+        {
+          "id": "tank_full_level",
+          "type": "number",
+          "label": {
+            "en": "Tank full level (cm)"
+          },
+          "value": 200,
+          "hint": {
+            "en": "Set the overflow  water level in cm"
+          },
+          "attr": {
+            "min": 1,
+            "max": 500
+          }
+        },
+        {
+          "id": "tank_low_level",
+          "type": "number",
+          "label": {
+            "en": "Tank low level (cm)"
+          },
+          "value": 10,
+          "hint": {
+            "en": "Set the lowest usable water level in cm"
+          },
+          "attr": {
+            "min": 0,
+            "max": 500
+          }
+        }
+      ]
+    },
+    {
+      "id": "zigbee-double-light-switch",
+      "name": {
+        "en": "Zigbee Double Light Switch 1"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/zigbee-double-light-switch/assets/images/small.png",
+        "large": "/drivers/zigbee-double-light-switch/assets/images/large.png",
+        "xlarge": "/drivers/zigbee-double-light-switch/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      },
+      "zigbee": {
+        "manufacturerName": "_TYZB01_6g8b7at8",
+        "productId": [
+          "TS0012"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              6
+            ],
+            "bindings": [
+              6
+            ]
+          },
+          "2": {
+            "clusters": [
+              6
+            ],
+            "bindings": [
+              6
+            ]
+          }
+        },
+        "devices": {
+          "secondSwitch": {
+            "class": "socket",
+            "capabilities": [
+              "onoff"
+            ],
+            "name": {
+              "en": "Zigbee Double Light Switch 2"
+            },
+            "energy": {
+              "approximation": {
+                "usageOn": 0,
+                "usageOff": 0
+              }
+            }
+          }
+        },
+        "learnmode": {
+          "image": "/drivers/zigbee-double-light-switch/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press any button on your device and hold down for 10 seconds."
+          }
+        }
+      }
+    },
     {
       "id": "zigbee-siren",
       "name": {
@@ -666,6 +1134,21 @@
     }
   ],
   "capabilities": {
+    "alarm_low_level": {
+      "type": "boolean",
+      "title": {
+        "en": "Low Level Alarm"
+      },
+      "units": {
+        "en": "Status"
+      },
+      "desc": {
+        "en": "Water Low Level Alarm"
+      },
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/capability_icons/water-level.svg"
+    },
     "alarm_siren": {
       "type": "boolean",
       "title": {
@@ -681,6 +1164,106 @@
       },
       "getable": true,
       "setable": false
+    },
+    "measure_capacity": {
+      "type": "number",
+      "title": {
+        "en": "Capacity"
+      },
+      "units": {
+        "en": "%"
+      },
+      "desc": {
+        "en": "% Capacity"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/holding-capacity.svg"
+    },
+    "measure_consumption_rate": {
+      "type": "number",
+      "title": {
+        "en": "Consumption Rate"
+      },
+      "units": {
+        "en": "cm/d"
+      },
+      "desc": {
+        "en": "Consumption rate in cm per day"
+      },
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/holding-capacity.svg"
+    },
+    "measure_days_remaining": {
+      "type": "number",
+      "title": {
+        "en": "Days Remaining"
+      },
+      "units": {
+        "en": "days"
+      },
+      "desc": {
+        "en": "Estimated number of days remaining"
+      },
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/timer.svg"
+    },
+    "measure_depth": {
+      "type": "number",
+      "title": {
+        "en": "Depth"
+      },
+      "units": {
+        "en": "cm"
+      },
+      "desc": {
+        "en": "Water Depth"
+      },
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/depth.svg"
+    },
+    "measure_volume": {
+      "type": "number",
+      "title": {
+        "en": "Volume"
+      },
+      "units": {
+        "en": "Litres"
+      },
+      "desc": {
+        "en": "Water volume"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/measure_volume.svg"
+    },
+    "measure_water_level": {
+      "type": "number",
+      "title": {
+        "en": "Water Level"
+      },
+      "units": {
+        "en": "cm"
+      },
+      "desc": {
+        "en": "Water Level"
+      },
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/depth.svg"
     }
   }
 }

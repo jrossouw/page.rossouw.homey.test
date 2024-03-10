@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Water Level"
+  },
+  "units": {
+    "en": "cm"
+  },
+  "desc": {
+    "en": "Water Level"
+  },
+  "decimals": 1,
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/capability_icons/depth.svg"
+}

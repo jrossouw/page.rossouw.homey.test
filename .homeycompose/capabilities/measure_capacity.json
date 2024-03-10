@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Capacity"
+  },
+  "units": {
+    "en": "%"
+  },
+  "desc": {
+    "en": "% Capacity"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/capability_icons/holding-capacity.svg"
+}

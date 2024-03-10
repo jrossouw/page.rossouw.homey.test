@@ -1,0 +1,15 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Low Level Alarm"
+  },
+  "units": {
+    "en": "Status"
+  },
+  "desc": {
+    "en": "Water Low Level Alarm"
+  },
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/capability_icons/water-level.svg"
+}

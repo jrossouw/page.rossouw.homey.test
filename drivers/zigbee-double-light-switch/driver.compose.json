@@ -1,0 +1,60 @@
+{
+  "id": "WallSwitch2Gang",
+  "name": {
+    "en": "Zigbee Double Light Switch 1"
+  },
+  "class": "socket",
+  "capabilities": [
+    "onoff"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "zigbee"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "energy": {
+    "approximation": {
+      "usageOn": 0,
+      "usageOff": 0
+    }
+  },
+  "zigbee": {
+    "manufacturerName": "_TYZB01_6g8b7at8",
+    "productId": ["TS0012"],
+    "endpoints": {
+      "1": {
+        "clusters": [0, 6],
+        "bindings": [6]
+      },
+      "2": {
+        "clusters": [6],
+        "bindings": [6]
+      }
+    },
+    "devices": {
+      "secondSwitch": {
+        "class": "socket",
+        "capabilities": ["onoff"],
+        "name": {
+          "en": "Zigbee Double Light Switch 2"
+        },
+        "energy": {
+          "approximation": {
+            "usageOn": 0,
+            "usageOff": 0
+          }
+        }
+      }
+    },
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": { "en": "Press any button on your device and hold down for 10 seconds." }
+    }
+  }
+}
