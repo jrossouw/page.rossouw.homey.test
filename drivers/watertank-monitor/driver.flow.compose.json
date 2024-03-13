@@ -1,7 +1,7 @@
 {
   "actions": [
     {
-      "id": "consumption_rate",
+      "id": "water_monitor_consumption_rate",
       "title": {
         "en": "Set the daily consumption rate"
       },
@@ -13,49 +13,49 @@
           "type": "number",
           "name": "rate",
           "min": 0,
-          "max": 100,
-          "step": 0.1,
+          "max": 10000,
+          "step": 1,
           "label": {
-            "en": "cm/d"
-          },
-          "placeholder": {
-            "en": "0.5"
-          },
-          "title": {
-            "en": "Daily consumption rate in cm"
-          }
-        }
-      ]
-    },
-    {
-      "id": "depth",
-      "title": {
-        "en": "Set the current depth in cm"
-      },
-      "titleFormatted": {
-        "en": "Set current depth to [[depth]]"
-      },
-      "args": [
-        {
-          "type": "number",
-          "name": "depth",
-          "min": 0,
-          "max": 1000,
-          "step": 0.1,
-          "label": {
-            "en": "cm"
+            "en": "l/d"
           },
           "placeholder": {
             "en": "0"
           },
           "title": {
-            "en": "Water depth in cm"
+            "en": "Daily consumption rate in litres"
           }
         }
       ]
     },
     {
-      "id": "days_left",
+      "id": "water_monitor_volume",
+      "title": {
+        "en": "Set the current volume in litres"
+      },
+      "titleFormatted": {
+        "en": "Set current water volume to [[volume]]"
+      },
+      "args": [
+        {
+          "type": "number",
+          "name": "volume",
+          "min": 0,
+          "max": 1000000,
+          "step": 1,
+          "label": {
+            "en": "l"
+          },
+          "placeholder": {
+            "en": "0"
+          },
+          "title": {
+            "en": "Water volume in litres"
+          }
+        }
+      ]
+    },
+    {
+      "id": "water_monitor_days_left",
       "title": {
         "en": "Number of days of water left at current consumption rate"
       },
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "id": "low_level_alarm",
+      "id": "water_monitor_low_level_alarm",
       "title": {
         "en": "Water low level alarm"
       },

@@ -6,7 +6,7 @@
   "class": "sensor",
   "capabilities": [
     "measure_consumption_rate",
-    "measure_depth",
+    "measure_volume",
     "measure_days_remaining",
     "alarm_low_level"
   ],

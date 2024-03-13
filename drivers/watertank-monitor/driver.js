@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+const { generateUUID } = require('../../lib/util/uuid');
 
 class VirtualDriver extends Homey.Driver {
 
@@ -12,9 +13,9 @@ class VirtualDriver extends Homey.Driver {
     session.setHandler('list_devices', async () => {
       return [
         {
-          name: 'Water Tank Monitor',
+          name: 'Water Consumption Monitor',
           data: {
-            id: 'abcd',
+            id: generateUUID(),
           },
         },
       ];

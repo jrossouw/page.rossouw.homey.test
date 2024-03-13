@@ -8,7 +8,7 @@ class VirtualDevice extends Homey.Device {
     const actionDepth = this.homey.flow.getActionCard('water_sensor_water_level');
     actionDepth.registerRunListener(async (args, state) => {
       this.log('Setting water level for device ', this);
-      args.device.setCapabilityValue('measure_water_level', args.water_level.toFixed(2) * 1.0);
+      await args.device.setCapabilityValue('measure_water_level', args.water_level.toFixed(2) * 1.0);
     });
     const actionVolume = this.homey.flow.getActionCard('water_sensor_volume');
     actionVolume.registerRunListener(async (args, state) => {

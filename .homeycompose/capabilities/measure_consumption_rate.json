@@ -4,12 +4,12 @@
     "en": "Consumption Rate"
   },
   "units": {
-    "en": "cm/d"
+    "en": "l/d"
   },
   "desc": {
-    "en": "Consumption rate in cm per day"
+    "en": "Consumption rate in litres per day"
   },
-  "decimals": 1,
+  "decimals": 0,
   "getable": true,
   "setable": false,
   "insights": true,
