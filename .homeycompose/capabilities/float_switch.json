@@ -1,0 +1,14 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Water Detected"
+  },
+  "desc": {
+    "en": "Water Detected"
+  },
+  "units": {
+    "en": "Status"
+  },
+  "getable": true,
+  "setable": true
+}

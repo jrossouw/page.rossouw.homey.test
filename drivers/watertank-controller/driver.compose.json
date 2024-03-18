@@ -1,0 +1,46 @@
+{
+  "id": "WaterTankController",
+  "name": {
+    "en": "Zigbee Watertank Controller"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "onoff",
+    "measure_voltage",
+    "measure_temperature",
+    "measure_humidity",
+    "float_switch",
+    "measure_depth"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "zigbee"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "energy": {
+    "approximation": {
+      "usageOn": 0,
+      "usageOff": 0
+    }
+  },
+  "zigbee": {
+    "manufacturerName": "",
+    "productId": ["ESHED.Tankctl"],
+    "endpoints": {
+      "1": {
+        "clusters": [0, 6, 1026, 1029, 1280, 2820],
+        "bindings": [6, 1026, 1029, 1280, 2820]
+      }
+    },
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": { "en": "Long press the button on your device" }
+    }
+  }
+}
