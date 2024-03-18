@@ -14,7 +14,7 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     this.log(zclNode);
     this.log(zclNode.endpoints[1]);
 
-    this.registerMultipleCapabilities(['onoff.1', 'onoff.2'], CLUSTER.ON_OFF, {
+    this.registerCapability('onoff.pump', CLUSTER.ON_OFF, {
       endpoint: 1,
     });
 

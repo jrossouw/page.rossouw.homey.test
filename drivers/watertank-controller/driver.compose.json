@@ -5,12 +5,14 @@
   },
   "class": "sensor",
   "capabilities": [
-    "onoff",
+    "onoff.pump",
+    "onoff.valve",
     "measure_voltage",
     "measure_temperature",
     "measure_humidity",
     "float_switch",
-    "measure_depth"
+    "measure_depth.top",
+    "measure_depth.bottom"
   ],
   "platforms": [
     "local"
