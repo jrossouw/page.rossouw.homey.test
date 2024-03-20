@@ -10,5 +10,5 @@
     "en": "Status"
   },
   "getable": true,
-  "setable": true
+  "setable": false
 }

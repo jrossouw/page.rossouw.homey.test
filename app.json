@@ -27,6 +27,577 @@
     "name": "Johan Rossouw",
     "email": "johan@rossouw.page"
   },
+  "drivers": [
+    {
+      "id": "watertank-controller",
+      "name": {
+        "en": "Zigbee Watertank Controller"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "water_pump",
+        "dump_valve",
+        "measure_voltage",
+        "measure_temperature",
+        "measure_humidity",
+        "float_switch",
+        "measure_depth.top",
+        "measure_depth.bottom"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/watertank-controller/assets/images/small.png",
+        "large": "/drivers/watertank-controller/assets/images/large.png",
+        "xlarge": "/drivers/watertank-controller/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      },
+      "zigbee": {
+        "manufacturerName": "",
+        "productId": [
+          "ESHED.Tankctl"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              6,
+              1026,
+              1029,
+              1280,
+              2820
+            ],
+            "bindings": [
+              6,
+              1026,
+              1029,
+              1280,
+              2820
+            ]
+          },
+          "2": {
+            "clusters": [
+              6
+            ],
+            "bindings": [
+              6
+            ]
+          }
+        },
+        "learnmode": {
+          "image": "/drivers/watertank-controller/assets/learnmode.svg",
+          "instruction": {
+            "en": "Long press the button on your device"
+          }
+        }
+      }
+    },
+    {
+      "id": "watertank-monitor",
+      "name": {
+        "en": "Virtual Tank Monitor "
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_consumption_rate",
+        "measure_volume",
+        "measure_days_remaining",
+        "alarm_low_level"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_my_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_my_devices"
+          }
+        },
+        {
+          "id": "add_my_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/watertank-monitor/assets/images/small.png",
+        "large": "/drivers/watertank-monitor/assets/images/large.png",
+        "xlarge": "/drivers/watertank-monitor/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      }
+    },
+    {
+      "id": "watertank-sensor",
+      "name": {
+        "en": "Virtual Tank Sensor"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_water_level",
+        "measure_capacity",
+        "measure_volume",
+        "alarm_low_level"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_my_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_my_devices"
+          }
+        },
+        {
+          "id": "add_my_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/watertank-sensor/assets/images/small.png",
+        "large": "/drivers/watertank-sensor/assets/images/large.png",
+        "xlarge": "/drivers/watertank-sensor/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      },
+      "settings": [
+        {
+          "id": "tank_diameter",
+          "type": "number",
+          "label": {
+            "en": "Tank diameter (meters)"
+          },
+          "value": 3.5,
+          "hint": {
+            "en": "Set the tank diameter"
+          },
+          "attr": {
+            "min": 1,
+            "max": 255
+          }
+        },
+        {
+          "id": "tank_full_level",
+          "type": "number",
+          "label": {
+            "en": "Tank full level (cm)"
+          },
+          "value": 200,
+          "hint": {
+            "en": "Set the overflow  water level in cm"
+          },
+          "attr": {
+            "min": 1,
+            "max": 500
+          }
+        },
+        {
+          "id": "tank_low_level",
+          "type": "number",
+          "label": {
+            "en": "Tank low level (cm)"
+          },
+          "value": 10,
+          "hint": {
+            "en": "Set the lowest usable water level in cm"
+          },
+          "attr": {
+            "min": 0,
+            "max": 500
+          }
+        }
+      ]
+    },
+    {
+      "id": "zigbee-double-light-switch",
+      "name": {
+        "en": "Zigbee Double Light Switch 1"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/zigbee-double-light-switch/assets/images/small.png",
+        "large": "/drivers/zigbee-double-light-switch/assets/images/large.png",
+        "xlarge": "/drivers/zigbee-double-light-switch/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      },
+      "zigbee": {
+        "manufacturerName": "_TYZB01_6g8b7at8",
+        "productId": [
+          "TS0012"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              6
+            ],
+            "bindings": [
+              6
+            ]
+          },
+          "2": {
+            "clusters": [
+              6
+            ],
+            "bindings": [
+              6
+            ]
+          }
+        },
+        "devices": {
+          "secondSwitch": {
+            "class": "socket",
+            "capabilities": [
+              "onoff"
+            ],
+            "name": {
+              "en": "Zigbee Double Light Switch 2"
+            },
+            "energy": {
+              "approximation": {
+                "usageOn": 0,
+                "usageOff": 0
+              }
+            }
+          }
+        },
+        "learnmode": {
+          "image": "/drivers/zigbee-double-light-switch/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press any button on your device and hold down for 10 seconds."
+          }
+        }
+      }
+    },
+    {
+      "id": "zigbee-siren",
+      "name": {
+        "en": "Tuya Siren"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff",
+        "measure_battery"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "greyout": false
+        }
+      },
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A"
+        ]
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/zigbee-siren/assets/images/small.png",
+        "large": "/drivers/zigbee-siren/assets/images/large.png"
+      },
+      "zigbee": {
+        "manufacturerName": [
+          "_TZE204_t1blo2bj"
+        ],
+        "productId": [
+          "TS0601"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              4,
+              5,
+              61184
+            ],
+            "bindings": [
+              10,
+              25,
+              61184
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Press and hold the button inside the battery compartment for aprox 5 seconds until the LED blinks rapidly.",
+            "it": "Tenere premuto il pulsante all'interno del vano batteria per cicrca 5 secondi finchè il LED non lampeggia rapidamente."
+          }
+        }
+      },
+      "settings": [
+        {
+          "id": "alarmvolume",
+          "type": "dropdown",
+          "label": {
+            "en": "Alarm volume",
+            "nl": "Alarm volume",
+            "de": "Alarm Lautstärke"
+          },
+          "value": "0",
+          "hint": {
+            "en": "Set the volume of the Alarm sound",
+            "nl": "Aanpassen volume van Alarm geluid",
+            "de": "Einstellen der Lautstärke des Alarmtons"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Low",
+                "nl": "Laag",
+                "de": "Niedrig"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Middle",
+                "nl": "Middelmatig",
+                "de": "Mittel"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "High (default)",
+                "nl": "Hoog (standaard)",
+                "de": "Hoch (Standard)"
+              }
+            }
+          ]
+        },
+        {
+          "id": "alarmsoundtime",
+          "type": "number",
+          "value": 120,
+          "min": 1,
+          "max": 65535,
+          "step": 1,
+          "units": {
+            "en": "Seconds",
+            "de": "Sekunden",
+            "nl": "Seconden"
+          },
+          "label": {
+            "en": "Alarm duration time",
+            "nl": "Alarm duratie",
+            "de": "Alarmdauer"
+          },
+          "hint": {
+            "en": "Set the duration of the time the siren will sound its alarm music",
+            "nl": "Pas de tijd aan dat de sirene zijn alarm geluid laat horen",
+            "de": "Stellt die Zeitdauer ein, während der die Sirene Alarmton erklingt"
+          }
+        },
+        {
+          "id": "alarmtune",
+          "type": "dropdown",
+          "label": {
+            "en": "Alarm sound tune",
+            "nl": "Melodie/geluid alarm",
+            "de": "Alarm Melodie"
+          },
+          "value": "1",
+          "hint": {
+            "en": "Choose the tune of the alarm sound",
+            "nl": "Kies de melodie die gebruikt wordt bij alarm",
+            "de": "Wählt die Melodie des Alarmtons aus."
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Doorbell Chime",
+                "nl": "Doorbell Chime",
+                "de": "Doorbell Chime"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Fur Elise",
+                "nl": "Fur Elise (standaard)",
+                "de": "Fur Elise (Standard)"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Westminster Chimes",
+                "nl": "Westminster Chimes",
+                "de": "Westminster Chimes"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Fast double door bell",
+                "nl": "Fast double door bell",
+                "de": "Fast double door bell"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "William Tell Overture",
+                "nl": "William Tell Overture",
+                "de": "William Tell Overture"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Turkish March",
+                "nl": "Turkish March",
+                "de": "Turkish March"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "Safe/Security Alarm",
+                "nl": "Safe/Security Alarm",
+                "de": "Safe/Security Alarm"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "Chemical Spill Alert",
+                "nl": "Chemical Spill Alert",
+                "de": "Chemical Spill Alert"
+              }
+            },
+            {
+              "id": "8",
+              "label": {
+                "en": "Piercing Alarm Clock",
+                "nl": "Piercing Alarm Clock",
+                "de": "Piercing Alarm Clock"
+              }
+            },
+            {
+              "id": "9",
+              "label": {
+                "en": "Smoke Alarm",
+                "nl": "Smoke Alarm",
+                "de": "Smoke Alarm"
+              }
+            },
+            {
+              "id": "10",
+              "label": {
+                "en": "Dog Barking",
+                "nl": "Dog Barking",
+                "de": "Dog Barking"
+              }
+            },
+            {
+              "id": "11",
+              "label": {
+                "en": "Police Siren",
+                "nl": "Police Siren",
+                "de": "Police Siren"
+              }
+            },
+            {
+              "id": "12",
+              "label": {
+                "en": "Doorbell Chime (reverb)",
+                "nl": "Doorbell Chime (reverb)",
+                "de": "Doorbell Chime (reverb)"
+              }
+            },
+            {
+              "id": "13",
+              "label": {
+                "en": "Mechanical Telephone",
+                "nl": "Mechanical Telephone",
+                "de": "Mechanical Telephone"
+              }
+            },
+            {
+              "id": "14",
+              "label": {
+                "en": "Fire/Ambulance",
+                "nl": "Fire/Ambulance",
+                "de": "Fire/Ambulance"
+              }
+            },
+            {
+              "id": "15",
+              "label": {
+                "en": "3/1 Elevator",
+                "nl": "3/1 Elevator",
+                "de": "3/1 Elevator"
+              }
+            },
+            {
+              "id": "16",
+              "label": {
+                "en": "Buzzing Alarm Clock",
+                "nl": "Buzzing Alarm Clock",
+                "de": "Buzzing Alarm Clock"
+              }
+            },
+            {
+              "id": "17",
+              "label": {
+                "en": "School Bell",
+                "nl": "School Bell",
+                "de": "School Bell"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "flow": {
     "actions": [
       {
@@ -635,504 +1206,6 @@
       }
     ]
   },
-  "drivers": [
-    {
-      "id": "watertank-monitor",
-      "name": {
-        "en": "Virtual Tank Monitor "
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_consumption_rate",
-        "measure_volume",
-        "measure_days_remaining",
-        "alarm_low_level"
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "pair": [
-        {
-          "id": "list_my_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_my_devices"
-          }
-        },
-        {
-          "id": "add_my_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "small": "/drivers/watertank-monitor/assets/images/small.png",
-        "large": "/drivers/watertank-monitor/assets/images/large.png",
-        "xlarge": "/drivers/watertank-monitor/assets/images/xlarge.png"
-      },
-      "energy": {
-        "approximation": {
-          "usageOn": 0,
-          "usageOff": 0
-        }
-      }
-    },
-    {
-      "id": "watertank-sensor",
-      "name": {
-        "en": "Virtual Tank Sensor"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_water_level",
-        "measure_capacity",
-        "measure_volume",
-        "alarm_low_level"
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "pair": [
-        {
-          "id": "list_my_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_my_devices"
-          }
-        },
-        {
-          "id": "add_my_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "small": "/drivers/watertank-sensor/assets/images/small.png",
-        "large": "/drivers/watertank-sensor/assets/images/large.png",
-        "xlarge": "/drivers/watertank-sensor/assets/images/xlarge.png"
-      },
-      "energy": {
-        "approximation": {
-          "usageOn": 0,
-          "usageOff": 0
-        }
-      },
-      "settings": [
-        {
-          "id": "tank_diameter",
-          "type": "number",
-          "label": {
-            "en": "Tank diameter (meters)"
-          },
-          "value": 3.5,
-          "hint": {
-            "en": "Set the tank diameter"
-          },
-          "attr": {
-            "min": 1,
-            "max": 255
-          }
-        },
-        {
-          "id": "tank_full_level",
-          "type": "number",
-          "label": {
-            "en": "Tank full level (cm)"
-          },
-          "value": 200,
-          "hint": {
-            "en": "Set the overflow  water level in cm"
-          },
-          "attr": {
-            "min": 1,
-            "max": 500
-          }
-        },
-        {
-          "id": "tank_low_level",
-          "type": "number",
-          "label": {
-            "en": "Tank low level (cm)"
-          },
-          "value": 10,
-          "hint": {
-            "en": "Set the lowest usable water level in cm"
-          },
-          "attr": {
-            "min": 0,
-            "max": 500
-          }
-        }
-      ]
-    },
-    {
-      "id": "zigbee-double-light-switch",
-      "name": {
-        "en": "Zigbee Double Light Switch 1"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff"
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "zigbee"
-      ],
-      "images": {
-        "small": "/drivers/zigbee-double-light-switch/assets/images/small.png",
-        "large": "/drivers/zigbee-double-light-switch/assets/images/large.png",
-        "xlarge": "/drivers/zigbee-double-light-switch/assets/images/xlarge.png"
-      },
-      "energy": {
-        "approximation": {
-          "usageOn": 0,
-          "usageOff": 0
-        }
-      },
-      "zigbee": {
-        "manufacturerName": "_TYZB01_6g8b7at8",
-        "productId": [
-          "TS0012"
-        ],
-        "endpoints": {
-          "1": {
-            "clusters": [
-              0,
-              6
-            ],
-            "bindings": [
-              6
-            ]
-          },
-          "2": {
-            "clusters": [
-              6
-            ],
-            "bindings": [
-              6
-            ]
-          }
-        },
-        "devices": {
-          "secondSwitch": {
-            "class": "socket",
-            "capabilities": [
-              "onoff"
-            ],
-            "name": {
-              "en": "Zigbee Double Light Switch 2"
-            },
-            "energy": {
-              "approximation": {
-                "usageOn": 0,
-                "usageOff": 0
-              }
-            }
-          }
-        },
-        "learnmode": {
-          "image": "/drivers/zigbee-double-light-switch/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press any button on your device and hold down for 10 seconds."
-          }
-        }
-      }
-    },
-    {
-      "id": "zigbee-siren",
-      "name": {
-        "en": "Tuya Siren"
-      },
-      "class": "other",
-      "capabilities": [
-        "onoff",
-        "measure_battery"
-      ],
-      "capabilitiesOptions": {
-        "onoff": {
-          "greyout": false
-        }
-      },
-      "energy": {
-        "batteries": [
-          "CR123A",
-          "CR123A"
-        ]
-      },
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "zigbee"
-      ],
-      "images": {
-        "small": "/drivers/zigbee-siren/assets/images/small.png",
-        "large": "/drivers/zigbee-siren/assets/images/large.png"
-      },
-      "zigbee": {
-        "manufacturerName": [
-          "_TZE204_t1blo2bj"
-        ],
-        "productId": [
-          "TS0601"
-        ],
-        "endpoints": {
-          "1": {
-            "clusters": [
-              0,
-              4,
-              5,
-              61184
-            ],
-            "bindings": [
-              10,
-              25,
-              61184
-            ]
-          }
-        },
-        "learnmode": {
-          "instruction": {
-            "en": "Press and hold the button inside the battery compartment for aprox 5 seconds until the LED blinks rapidly.",
-            "it": "Tenere premuto il pulsante all'interno del vano batteria per cicrca 5 secondi finchè il LED non lampeggia rapidamente."
-          }
-        }
-      },
-      "settings": [
-        {
-          "id": "alarmvolume",
-          "type": "dropdown",
-          "label": {
-            "en": "Alarm volume",
-            "nl": "Alarm volume",
-            "de": "Alarm Lautstärke"
-          },
-          "value": "0",
-          "hint": {
-            "en": "Set the volume of the Alarm sound",
-            "nl": "Aanpassen volume van Alarm geluid",
-            "de": "Einstellen der Lautstärke des Alarmtons"
-          },
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Low",
-                "nl": "Laag",
-                "de": "Niedrig"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Middle",
-                "nl": "Middelmatig",
-                "de": "Mittel"
-              }
-            },
-            {
-              "id": "2",
-              "label": {
-                "en": "High (default)",
-                "nl": "Hoog (standaard)",
-                "de": "Hoch (Standard)"
-              }
-            }
-          ]
-        },
-        {
-          "id": "alarmsoundtime",
-          "type": "number",
-          "value": 120,
-          "min": 1,
-          "max": 65535,
-          "step": 1,
-          "units": {
-            "en": "Seconds",
-            "de": "Sekunden",
-            "nl": "Seconden"
-          },
-          "label": {
-            "en": "Alarm duration time",
-            "nl": "Alarm duratie",
-            "de": "Alarmdauer"
-          },
-          "hint": {
-            "en": "Set the duration of the time the siren will sound its alarm music",
-            "nl": "Pas de tijd aan dat de sirene zijn alarm geluid laat horen",
-            "de": "Stellt die Zeitdauer ein, während der die Sirene Alarmton erklingt"
-          }
-        },
-        {
-          "id": "alarmtune",
-          "type": "dropdown",
-          "label": {
-            "en": "Alarm sound tune",
-            "nl": "Melodie/geluid alarm",
-            "de": "Alarm Melodie"
-          },
-          "value": "1",
-          "hint": {
-            "en": "Choose the tune of the alarm sound",
-            "nl": "Kies de melodie die gebruikt wordt bij alarm",
-            "de": "Wählt die Melodie des Alarmtons aus."
-          },
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Doorbell Chime",
-                "nl": "Doorbell Chime",
-                "de": "Doorbell Chime"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Fur Elise",
-                "nl": "Fur Elise (standaard)",
-                "de": "Fur Elise (Standard)"
-              }
-            },
-            {
-              "id": "2",
-              "label": {
-                "en": "Westminster Chimes",
-                "nl": "Westminster Chimes",
-                "de": "Westminster Chimes"
-              }
-            },
-            {
-              "id": "3",
-              "label": {
-                "en": "Fast double door bell",
-                "nl": "Fast double door bell",
-                "de": "Fast double door bell"
-              }
-            },
-            {
-              "id": "4",
-              "label": {
-                "en": "William Tell Overture",
-                "nl": "William Tell Overture",
-                "de": "William Tell Overture"
-              }
-            },
-            {
-              "id": "5",
-              "label": {
-                "en": "Turkish March",
-                "nl": "Turkish March",
-                "de": "Turkish March"
-              }
-            },
-            {
-              "id": "6",
-              "label": {
-                "en": "Safe/Security Alarm",
-                "nl": "Safe/Security Alarm",
-                "de": "Safe/Security Alarm"
-              }
-            },
-            {
-              "id": "7",
-              "label": {
-                "en": "Chemical Spill Alert",
-                "nl": "Chemical Spill Alert",
-                "de": "Chemical Spill Alert"
-              }
-            },
-            {
-              "id": "8",
-              "label": {
-                "en": "Piercing Alarm Clock",
-                "nl": "Piercing Alarm Clock",
-                "de": "Piercing Alarm Clock"
-              }
-            },
-            {
-              "id": "9",
-              "label": {
-                "en": "Smoke Alarm",
-                "nl": "Smoke Alarm",
-                "de": "Smoke Alarm"
-              }
-            },
-            {
-              "id": "10",
-              "label": {
-                "en": "Dog Barking",
-                "nl": "Dog Barking",
-                "de": "Dog Barking"
-              }
-            },
-            {
-              "id": "11",
-              "label": {
-                "en": "Police Siren",
-                "nl": "Police Siren",
-                "de": "Police Siren"
-              }
-            },
-            {
-              "id": "12",
-              "label": {
-                "en": "Doorbell Chime (reverb)",
-                "nl": "Doorbell Chime (reverb)",
-                "de": "Doorbell Chime (reverb)"
-              }
-            },
-            {
-              "id": "13",
-              "label": {
-                "en": "Mechanical Telephone",
-                "nl": "Mechanical Telephone",
-                "de": "Mechanical Telephone"
-              }
-            },
-            {
-              "id": "14",
-              "label": {
-                "en": "Fire/Ambulance",
-                "nl": "Fire/Ambulance",
-                "de": "Fire/Ambulance"
-              }
-            },
-            {
-              "id": "15",
-              "label": {
-                "en": "3/1 Elevator",
-                "nl": "3/1 Elevator",
-                "de": "3/1 Elevator"
-              }
-            },
-            {
-              "id": "16",
-              "label": {
-                "en": "Buzzing Alarm Clock",
-                "nl": "Buzzing Alarm Clock",
-                "de": "Buzzing Alarm Clock"
-              }
-            },
-            {
-              "id": "17",
-              "label": {
-                "en": "School Bell",
-                "nl": "School Bell",
-                "de": "School Bell"
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ],
   "capabilities": {
     "alarm_low_level": {
       "type": "boolean",
@@ -1161,6 +1234,35 @@
       "desc": {
         "en": "Alarm",
         "nl": "Alarm"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "dump_valve": {
+      "type": "boolean",
+      "title": {
+        "en": "Dump Valve"
+      },
+      "units": {
+        "en": "Status"
+      },
+      "desc": {
+        "en": "Water Dump Valve"
+      },
+      "getable": true,
+      "setable": true,
+      "uiQuickAction": true
+    },
+    "float_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Water Detected"
+      },
+      "desc": {
+        "en": "Water Detected"
+      },
+      "units": {
+        "en": "Status"
       },
       "getable": true,
       "setable": false
@@ -1264,6 +1366,21 @@
       "setable": false,
       "insights": true,
       "icon": "/assets/capability_icons/depth.svg"
+    },
+    "water_pump": {
+      "type": "boolean",
+      "title": {
+        "en": "Water Pump"
+      },
+      "units": {
+        "en": "Status"
+      },
+      "desc": {
+        "en": "Water Pump Power"
+      },
+      "getable": true,
+      "setable": true,
+      "uiQuickAction": true
     }
   }
 }

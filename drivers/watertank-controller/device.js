@@ -14,8 +14,56 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     this.log(zclNode);
     this.log(zclNode.endpoints[1]);
 
-    this.registerCapability('onoff.pump', CLUSTER.ON_OFF, {
-      endpoint: 1,
+    this.registerCapability('water_pump', CLUSTER.ON_OFF, {
+      // This is often just a string, but can be a function as well
+      set: (value) => (value ? 'setOn' : 'setOff'),
+      setParser(value) {
+        return value;
+      },
+      get: 'onOff',
+      report: 'onOff',
+      reportParser: (value) => {
+        return value;
+      },
+      reportOpts: {
+        configureAttributeReporting: {
+          minInterval: 3600, // Minimally once every hour
+          maxInterval: 60000, // Maximally once every ~16 hours
+          minChange: 1,
+        },
+      },
+      endpoint: 1, // Default is 1
+      getOpts: {
+        //getOnStart: true,
+        //getOnOnline: true,
+        pollInterval: 30000, // in ms
+      },
+    });
+
+    this.registerCapability('dump_valve', CLUSTER.ON_OFF, {
+      // This is often just a string, but can be a function as well
+      set: (value) => (value ? 'setOn' : 'setOff'),
+      setParser(setValue) {
+        // In case a "set command" takes an argument you can return it from the setParser
+      },
+      get: 'onOff',
+      report: 'onOff',
+      reportParser: (value) => {
+        return value;
+      },
+      reportOpts: {
+        configureAttributeReporting: {
+          minInterval: 3600, // Minimally once every hour
+          maxInterval: 60000, // Maximally once every ~16 hours
+          minChange: 1,
+        },
+      },
+      endpoint: 2, // Default is 1
+      getOpts: {
+        //getOnStart: true,
+        //getOnOnline: true,
+        pollInterval: 30000, // in ms
+      },
     });
 
     // measure_temperature
@@ -43,6 +91,7 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     });
 
     if (!this.isSubDevice()) {
+      this.log('Reading attributes');
       await zclNode.endpoints[1].clusters.basic.readAttributes(['manufacturerName', 'zclVersion', 'appVersion', 'modelId', 'powerSource', 'attributeReportingStatus'])
         .catch((err) => {
           this.error('Error when reading device attributes ', err);
@@ -71,13 +120,6 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     const voltage = (measuredValue & 0xff00) / 2560;
     this.log('measure_voltage: ', voltage);
     this.setCapabilityValue('measure_voltage', voltage).catch(this.error);
-    const alarm = (measuredValue & 0b10000000) > 0;
-    if (alarm) {
-      this.log('Motion detected');
-    } else {
-      this.log('No motion detected');
-    }
-    this.setCapabilityValue('alarm_motion', alarm).catch(this.error);
   }
 
   onIASZoneStatusChangeNotification(payload) {

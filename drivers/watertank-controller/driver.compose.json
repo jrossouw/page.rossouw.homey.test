@@ -5,8 +5,8 @@
   },
   "class": "sensor",
   "capabilities": [
-    "onoff.pump",
-    "onoff.valve",
+    "water_pump",
+    "dump_valve",
     "measure_voltage",
     "measure_temperature",
     "measure_humidity",
@@ -38,6 +38,10 @@
       "1": {
         "clusters": [0, 6, 1026, 1029, 1280, 2820],
         "bindings": [6, 1026, 1029, 1280, 2820]
+      },
+      "2": {
+        "clusters": [6],
+        "bindings": [6]
       }
     },
     "learnmode": {

@@ -1,0 +1,15 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Dump Valve"
+  },
+  "units": {
+    "en": "Status"
+  },
+  "desc": {
+    "en": "Water Dump Valve"
+  },
+  "getable": true,
+  "setable": true,
+  "uiQuickAction": true
+}

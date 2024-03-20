@@ -1,0 +1,15 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Water Pump"
+  },
+  "units": {
+    "en": "Status"
+  },
+  "desc": {
+    "en": "Water Pump Power"
+  },
+  "getable": true,
+  "setable": true,
+  "uiQuickAction": true
+}
