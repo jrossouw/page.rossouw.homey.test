@@ -18,19 +18,13 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     this.registerCapability('water_pump', CLUSTER.ON_OFF, {
       endpoint: 1,
       // This is often just a string, but can be a function as well
-      set: value => value ? 'on' : 'off',
+      set: (value) => (value ? 'setOn' : 'setOff'),
       setParser: () => ({}),
       get: 'onOff',
       report: 'onOff',
       reportParser: (value) => {
         return value;
       },
-    });
-    this.registerCapabilityListener('water_pump', async (value) => {
-      this.log('water_pump: ', value);
-      await this.zclNode.endpoints[1].clusters.onOff.writeAttributes({ onOff: value }).catch((err) => {
-        this.error(err);
-      });
     });
 
     this.registerCapability('dump_valve', CLUSTER.ON_OFF, {
