@@ -11,5 +11,5 @@
   },
   "getable": true,
   "setable": true,
-  "uiQuickAction": true
+  "uiQuickAction": false
 }

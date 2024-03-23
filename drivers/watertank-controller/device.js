@@ -31,9 +31,7 @@ class ZigbeeWaterTank extends ZigBeeDevice {
       endpoint: 2,
       // This is often just a string, but can be a function as well
       set: (value) => (value ? 'setOn' : 'setOff'),
-      setParser(value) {
-        this.log(`In setParser: ${value}`);
-      },
+      setParser: () => ({}),
       get: 'onOff',
       report: 'onOff',
       reportParser: (value) => {
