@@ -35,8 +35,19 @@ class ZigbeeWaterTank extends ZigBeeDevice {
       get: 'onOff',
       report: 'onOff',
       reportParser: (value) => {
+        this.log(`Received onOff report for endpoint 2: ${value}`);
         return value;
       },
+    });
+
+    this.registerCapabilityListener('water_pump', async (value, options) => {
+      this.log(`Water pump value: ${value}`);
+      await zclNode.endpoints[1].clusters['onOff'][value ? 'setOn' : 'setOff']();
+    });
+
+    this.registerCapabilityListener('dump_valve', async (value, options) => {
+      this.log(`Dump valve value: ${value}`);
+      await zclNode.endpoints[2].clusters['onOff'][value ? 'setOn' : 'setOff']();
     });
 
     // measure_temperature
