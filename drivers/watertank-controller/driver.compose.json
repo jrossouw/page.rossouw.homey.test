@@ -32,8 +32,8 @@
     }
   },
   "zigbee": {
-    "manufacturerName": "",
-    "productId": ["ESHED.Tankctl"],
+    "manufacturerName": "TELINK",
+    "productId": ["TLSR82_4"],
     "endpoints": {
       "1": {
         "clusters": [0, 6, 1026, 1029, 1280, 2820],

@@ -13,56 +13,37 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     this.printNode();
     this.log(zclNode);
     this.log(zclNode.endpoints[1]);
+    this.log(zclNode.endpoints[2]);
 
     this.registerCapability('water_pump', CLUSTER.ON_OFF, {
+      endpoint: 1,
       // This is often just a string, but can be a function as well
-      set: (value) => (value ? 'setOn' : 'setOff'),
-      setParser(value) {
-        return value;
-      },
+      set: value => value ? 'on' : 'off',
+      setParser: () => ({}),
       get: 'onOff',
       report: 'onOff',
       reportParser: (value) => {
         return value;
       },
-      reportOpts: {
-        configureAttributeReporting: {
-          minInterval: 3600, // Minimally once every hour
-          maxInterval: 60000, // Maximally once every ~16 hours
-          minChange: 1,
-        },
-      },
-      endpoint: 1, // Default is 1
-      getOpts: {
-        //getOnStart: true,
-        //getOnOnline: true,
-        pollInterval: 30000, // in ms
-      },
+    });
+    this.registerCapabilityListener('water_pump', async (value) => {
+      this.log('water_pump: ', value);
+      await this.zclNode.endpoints[1].clusters.onOff.writeAttributes({ onOff: value }).catch((err) => {
+        this.error(err);
+      });
     });
 
     this.registerCapability('dump_valve', CLUSTER.ON_OFF, {
+      endpoint: 2,
       // This is often just a string, but can be a function as well
       set: (value) => (value ? 'setOn' : 'setOff'),
-      setParser(setValue) {
-        // In case a "set command" takes an argument you can return it from the setParser
+      setParser(value) {
+        this.log(`In setParser: ${value}`);
       },
       get: 'onOff',
       report: 'onOff',
       reportParser: (value) => {
         return value;
-      },
-      reportOpts: {
-        configureAttributeReporting: {
-          minInterval: 3600, // Minimally once every hour
-          maxInterval: 60000, // Maximally once every ~16 hours
-          minChange: 1,
-        },
-      },
-      endpoint: 2, // Default is 1
-      getOpts: {
-        //getOnStart: true,
-        //getOnOnline: true,
-        pollInterval: 30000, // in ms
       },
     });
 
