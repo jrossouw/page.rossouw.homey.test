@@ -15,66 +15,42 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     this.log(zclNode.endpoints[1]);
     this.log(zclNode.endpoints[2]);
 
-    this.registerCapability('water_pump', CLUSTER.ON_OFF, {
-      endpoint: 1,
-      // This is often just a string, but can be a function as well
-      set: (value) => (value ? 'setOn' : 'setOff'),
-      setParser: () => ({}),
-      get: 'onOff',
-      report: 'onOff',
-      reportParser: (value) => {
-        return value;
-      },
-    });
+    const { subDeviceId } = this.getData();
+    this.log('Device data: ', subDeviceId);
 
-    this.registerCapability('dump_valve', CLUSTER.ON_OFF, {
-      endpoint: 2,
-      // This is often just a string, but can be a function as well
-      set: (value) => (value ? 'setOn' : 'setOff'),
-      setParser: () => ({}),
-      get: 'onOff',
-      report: 'onOff',
-      reportParser: (value) => {
-        this.log(`Received onOff report for endpoint 2: ${value}`);
-        return value;
-      },
-    });
-
-    this.registerCapabilityListener('water_pump', async (value, options) => {
-      this.log(`Water pump value: ${value}`);
-      await zclNode.endpoints[1].clusters['onOff'][value ? 'setOn' : 'setOff']();
-    });
-
-    this.registerCapabilityListener('dump_valve', async (value, options) => {
-      this.log(`Dump valve value: ${value}`);
-      await zclNode.endpoints[2].clusters['onOff'][value ? 'setOn' : 'setOff']();
-    });
-
-    // measure_temperature
-    zclNode.endpoints[1].clusters[CLUSTER.TEMPERATURE_MEASUREMENT.NAME]
-      .on('attr.measuredValue', this.onTemperatureMeasuredAttributeReport.bind(this));
-
-    // measure_humidity
-    zclNode.endpoints[1].clusters[CLUSTER.RELATIVE_HUMIDITY_MEASUREMENT.NAME]
-      .on('attr.measuredValue', this.onRelativeHumidityMeasuredAttributeReport.bind(this));
-
-    zclNode.endpoints[1].clusters[CLUSTER.IAS_ZONE.NAME].onZoneStatusChangeNotification = (payload) => {
-      this.onIASZoneStatusChangeNotification(payload);
-    };
-
-    this.registerCapability('measure_voltage', CLUSTER.ELECTRICAL_MEASUREMENT, {
-      get: 'rmsVoltage',
-      report: 'rmsVoltage',
-      reportParser: (value) => {
-        return value;
-      },
-      getOpts: {
-        getOnStart: true,
-        pollInterval: this.minReportVoltage
-      },
+    this.registerCapability('onoff', CLUSTER.ON_OFF, {
+      endpoint: subDeviceId === 'secondSwitch' ? 2 : 1,
     });
 
     if (!this.isSubDevice()) {
+      // measure_temperature
+      zclNode.endpoints[1].clusters[CLUSTER.TEMPERATURE_MEASUREMENT.NAME]
+        .on('attr.measuredValue', this.onTemperatureMeasuredAttributeReport.bind(this));
+
+      // measure_humidity
+      zclNode.endpoints[1].clusters[CLUSTER.RELATIVE_HUMIDITY_MEASUREMENT.NAME]
+        .on('attr.measuredValue', this.onRelativeHumidityMeasuredAttributeReport.bind(this));
+
+      // measure_depth.top
+      zclNode.endpoints[1].clusters[CLUSTER.PRESSURE_MEASUREMENT.NAME]
+        .on('attr.measuredValue', this.onPressureMeasuredAttributeReport.bind(this));
+
+      // measure_depth.top
+      zclNode.endpoints[1].clusters[CLUSTER.FLOW_MEASUREMENT.NAME]
+        .on('attr.measuredValue', this.onFlowMeasuredAttributeReport.bind(this));
+
+      this.registerCapability('measure_voltage', CLUSTER.ELECTRICAL_MEASUREMENT, {
+        get: 'rmsVoltage',
+        report: 'rmsVoltage',
+        reportParser: (value) => {
+          return value;
+        },
+        getOpts: {
+          getOnStart: true,
+          pollInterval: this.minReportVoltage
+        },
+      });
+
       this.log('Reading attributes');
       await zclNode.endpoints[1].clusters.basic.readAttributes(['manufacturerName', 'zclVersion', 'appVersion', 'modelId', 'powerSource', 'attributeReportingStatus'])
         .catch((err) => {
@@ -104,11 +80,22 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     const voltage = (measuredValue & 0xff00) / 2560;
     this.log('measure_voltage: ', voltage);
     this.setCapabilityValue('measure_voltage', voltage).catch(this.error);
+    const float = (measuredValue & 0b10000000) > 0;
+    this.setCapabilityValue('float_switch', float).catch(this.error);
   }
 
-  onIASZoneStatusChangeNotification(payload) {
-    this.log('IASZoneStatusChangeNotification received:', payload);
-    this.setCapabilityValue('alarm_motion', payload.zoneStatus.alarm1).catch(this.error);
+  onPressureMeasuredAttributeReport(measuredValue) {
+    this.log('Received pressure value ', measuredValue);
+    const parsedValue = Math.round((measuredValue / 10) * 10) / 10;
+    this.log('measure_depth.top: ', parsedValue);
+    this.setCapabilityValue('measure_depth.top', parsedValue).catch(this.error);
+  }
+
+  onFlowMeasuredAttributeReport(measuredValue) {
+    this.log('Received flow value ', measuredValue);
+    const parsedValue = Math.round((measuredValue / 10) * 10) / 10;
+    this.log('measure_depth.bottom: ', parsedValue);
+    this.setCapabilityValue('measure_depth.bottom', parsedValue).catch(this.error);
   }
 
 }
