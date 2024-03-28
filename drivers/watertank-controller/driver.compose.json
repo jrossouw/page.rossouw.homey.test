@@ -5,7 +5,8 @@
   },
   "class": "sensor",
   "capabilities": [
-    "onoff",
+    "dump_valve",
+    "measure_battery",
     "measure_voltage",
     "measure_temperature",
     "measure_humidity",
@@ -35,27 +36,8 @@
     "productId": ["TLSR82_4"],
     "endpoints": {
       "1": {
-        "clusters": [0, 6, 1026, 1027, 1028, 1029, 1280, 2820],
-        "bindings": [6, 1026, 1027, 1028, 1029, 1280, 2820]
-      },
-      "2": {
-        "clusters": [6],
-        "bindings": [6]
-      }
-    },
-    "devices": {
-      "secondSwitch": {
-        "class": "socket",
-        "capabilities": ["onoff"],
-        "name": {
-          "en": "Dump Valve"
-        },
-        "energy": {
-          "approximation": {
-            "usageOn": 0,
-            "usageOff": 0
-          }
-        }
+        "clusters": [0, 1, 6, 1026, 1027, 1028, 1029, 1280],
+        "bindings": [6, 1026, 1027, 1028, 1029, 1280]
       }
     },
     "learnmode": {

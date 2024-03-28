@@ -35,7 +35,8 @@
       },
       "class": "sensor",
       "capabilities": [
-        "onoff",
+        "dump_valve",
+        "measure_battery",
         "measure_voltage",
         "measure_temperature",
         "measure_humidity",
@@ -69,13 +70,13 @@
           "1": {
             "clusters": [
               0,
+              1,
               6,
               1026,
               1027,
               1028,
               1029,
-              1280,
-              2820
+              1280
             ],
             "bindings": [
               6,
@@ -83,34 +84,8 @@
               1027,
               1028,
               1029,
-              1280,
-              2820
+              1280
             ]
-          },
-          "2": {
-            "clusters": [
-              6
-            ],
-            "bindings": [
-              6
-            ]
-          }
-        },
-        "devices": {
-          "secondSwitch": {
-            "class": "socket",
-            "capabilities": [
-              "onoff"
-            ],
-            "name": {
-              "en": "Dump Valve"
-            },
-            "energy": {
-              "approximation": {
-                "usageOn": 0,
-                "usageOff": 0
-              }
-            }
           }
         },
         "learnmode": {
@@ -1285,7 +1260,8 @@
         "en": "Status"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon": "/assets/capability_icons/water-presence.svg"
     },
     "measure_capacity": {
       "type": "number",
