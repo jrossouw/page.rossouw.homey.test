@@ -14,30 +14,6 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     this.log(zclNode);
     this.log(zclNode.endpoints[1]);
 
-    const { subDeviceId } = this.getData();
-    this.log('Device data: ', subDeviceId);
-
-    if (this.isFirstInit()) {
-      await this.configureAttributeReporting([
-        {
-          endpointId: 1,
-          cluster: CLUSTER.POWER_CONFIGURATION,
-          attributeName: 'batteryPercentageRemaining',
-          minInterval: 65535,
-          maxInterval: 0,
-          minChange: 0,
-        },
-        {
-          endpointId: 1,
-          cluster: CLUSTER.ON_OFF,
-          attributeName: 'onOff',
-          minInterval: 65535,
-          maxInterval: 0,
-          minChange: 0,
-        },
-      ]);
-    }
-
     this.registerCapability('dump_valve', CLUSTER.ON_OFF, {
       endpoint: 1,
       set: (value) => (value ? 'setOn' : 'setOff'),
@@ -48,6 +24,11 @@ class ZigbeeWaterTank extends ZigBeeDevice {
         return value;
       },
     });
+
+    this.log(zclNode.endpoints[1].clusters[CLUSTER.BINARY_INPUT.NAME]);
+
+    zclNode.endpoints[1].clusters[CLUSTER.BINARY_INPUT.NAME]
+      .on('attr.presentValue', this.onFloatSwitchChangeNotification.bind(this));
 
     // measure_temperature
     zclNode.endpoints[1].clusters[CLUSTER.TEMPERATURE_MEASUREMENT.NAME]
@@ -70,10 +51,15 @@ class ZigbeeWaterTank extends ZigBeeDevice {
       .on('attr.batteryVoltage', this.onBatteryVoltageAttributeReport.bind(this));
 
     this.log('Reading attributes');
-    await zclNode.endpoints[1].clusters.basic.readAttributes(['manufacturerName', 'zclVersion', 'appVersion', 'modelId', 'powerSource', 'attributeReportingStatus'])
+    await zclNode.endpoints[1].clusters.basic.readAttributes(['manufacturerName', 'modelId'])
       .catch((err) => {
         this.error('Error when reading device attributes ', err);
       });
+  }
+
+  onFloatSwitchChangeNotification(presentValue) {
+    this.log('Float switch change notification received:', presentValue);
+    this.setCapabilityValue('float_switch', presentValue).catch(this.error);
   }
 
   onBatteryVoltageAttributeReport(batteryVoltage) {
@@ -92,27 +78,21 @@ class ZigbeeWaterTank extends ZigBeeDevice {
   }
 
   onRelativeHumidityMeasuredAttributeReport(measuredValue) {
-    this.log('Received humidity value ', measuredValue.toString(16));
-    const parsedValue = measuredValue & 0b01111111;
-    this.log('measure_humidity:', parsedValue);
-    this.setCapabilityValue('measure_humidity', parsedValue).catch(this.error);
-    const voltage = (measuredValue & 0xff00) / (256 * 50);
-    //this.log('measure_voltage: ', voltage);
-    //this.setCapabilityValue('measure_voltage', voltage).catch(this.error);
-    const float = (measuredValue & 0b10000000) > 0;
-    this.setCapabilityValue('float_switch', float).catch(this.error);
+    this.log('Received humidity value ', measuredValue);
+    this.log('measure_humidity:', measuredValue);
+    this.setCapabilityValue('measure_humidity', measuredValue).catch(this.error);
   }
 
   onPressureMeasuredAttributeReport(measuredValue) {
     this.log('Received pressure value ', measuredValue);
-    const parsedValue = Math.round((measuredValue / 10) * 10) / 10;
+    const parsedValue = Math.round(measuredValue) / 10;
     this.log('measure_depth.top: ', parsedValue);
     this.setCapabilityValue('measure_depth.top', parsedValue).catch(this.error);
   }
 
   onFlowMeasuredAttributeReport(measuredValue) {
     this.log('Received flow value ', measuredValue);
-    const parsedValue = Math.round((measuredValue / 10) * 10) / 10;
+    const parsedValue = Math.round(measuredValue) / 10;
     this.log('measure_depth.bottom: ', parsedValue);
     this.setCapabilityValue('measure_depth.bottom', parsedValue).catch(this.error);
   }
