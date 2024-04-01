@@ -25,7 +25,13 @@ class ZigbeeWaterTank extends ZigBeeDevice {
       },
     });
 
-    this.log(zclNode.endpoints[1].clusters[CLUSTER.BINARY_INPUT.NAME]);
+    this.registerCapabilityListener('water_pump', async (value) => {
+      this.log('water_pump: ', value);
+      await zclNode.endpoints[1].clusters[CLUSTER.BINARY_OUTPUT.NAME].writeAttributes({ presentValue: value });
+    });
+
+    zclNode.endpoints[1].clusters[CLUSTER.BINARY_OUTPUT.NAME]
+      .on('attr.presentValue', this.onPumpSwitchChangeNotification.bind(this));
 
     zclNode.endpoints[1].clusters[CLUSTER.BINARY_INPUT.NAME]
       .on('attr.presentValue', this.onFloatSwitchChangeNotification.bind(this));
@@ -57,13 +63,18 @@ class ZigbeeWaterTank extends ZigBeeDevice {
       });
   }
 
+  onPumpSwitchChangeNotification(presentValue) {
+    this.log('Pump power change notification received:', presentValue);
+    this.setCapabilityValue('water_pump', presentValue).catch(this.error);
+  }
+
   onFloatSwitchChangeNotification(presentValue) {
     this.log('Float switch change notification received:', presentValue);
     this.setCapabilityValue('float_switch', presentValue).catch(this.error);
   }
 
   onBatteryVoltageAttributeReport(batteryVoltage) {
-    const parsedVoltage = batteryVoltage / 50;
+    const parsedVoltage = batteryVoltage / 100 + 2;
     const percentage = Math.round((parsedVoltage * 100) - 320);
     this.log('measure_battery | powerConfiguration - batteryVoltage (V): ', parsedVoltage);
     this.setCapabilityValue('measure_battery', percentage).catch(this.error);

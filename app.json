@@ -36,6 +36,7 @@
       "class": "sensor",
       "capabilities": [
         "dump_valve",
+        "water_pump",
         "measure_battery",
         "measure_voltage",
         "measure_temperature",
@@ -73,6 +74,7 @@
               1,
               6,
               15,
+              16,
               1026,
               1027,
               1028,
@@ -82,6 +84,7 @@
             "bindings": [
               6,
               15,
+              16,
               1026,
               1027,
               1028,

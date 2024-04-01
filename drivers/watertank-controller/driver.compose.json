@@ -6,6 +6,7 @@
   "class": "sensor",
   "capabilities": [
     "dump_valve",
+    "water_pump",
     "measure_battery",
     "measure_voltage",
     "measure_temperature",
@@ -36,8 +37,8 @@
     "productId": ["TLSR82_4"],
     "endpoints": {
       "1": {
-        "clusters": [0, 1, 6, 15, 1026, 1027, 1028, 1029, 1280],
-        "bindings": [6, 15, 1026, 1027, 1028, 1029, 1280]
+        "clusters": [0, 1, 6, 15, 16, 1026, 1027, 1028, 1029, 1280],
+        "bindings": [6, 15, 16, 1026, 1027, 1028, 1029, 1280]
       }
     },
     "learnmode": {
