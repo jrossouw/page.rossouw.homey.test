@@ -27,7 +27,8 @@ class ZigbeeWaterTank extends ZigBeeDevice {
 
     this.registerCapabilityListener('water_pump', async (value) => {
       this.log('water_pump: ', value);
-      await zclNode.endpoints[1].clusters[CLUSTER.BINARY_OUTPUT.NAME].writeAttributes({ presentValue: value });
+      const attrs = { presentValue: value };
+      await zclNode.endpoints[1].clusters[CLUSTER.BINARY_OUTPUT.NAME].writeAttributes(attrs);
     });
 
     zclNode.endpoints[1].clusters[CLUSTER.BINARY_OUTPUT.NAME]
