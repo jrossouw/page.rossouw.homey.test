@@ -76,7 +76,9 @@ class ZigbeeWaterTank extends ZigBeeDevice {
 
   onBatteryVoltageAttributeReport(batteryVoltage) {
     const parsedVoltage = batteryVoltage / 100 + 2;
-    const percentage = Math.round((parsedVoltage * 100) - 320);
+    let percentage = Math.round(6158.431 - 6178.737 * parsedVoltage + 1912.137 * (parsedVoltage ** 2) - 186.7824 * (parsedVoltage ** 3));
+    if (percentage > 100) percentage = 100;
+    if (percentage < 0) percentage = 0;
     this.log('measure_battery | powerConfiguration - batteryVoltage (V): ', parsedVoltage);
     this.setCapabilityValue('measure_battery', percentage).catch(this.error);
     this.setCapabilityValue('measure_voltage', parsedVoltage).catch(this.error);
