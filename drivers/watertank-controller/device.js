@@ -57,6 +57,10 @@ class ZigbeeWaterTank extends ZigBeeDevice {
     zclNode.endpoints[1].clusters[CLUSTER.POWER_CONFIGURATION.NAME]
       .on('attr.batteryVoltage', this.onBatteryVoltageAttributeReport.bind(this));
 
+    // measure_battery // alarm_battery
+    zclNode.endpoints[1].clusters[CLUSTER.POWER_CONFIGURATION.NAME]
+      .on('attr.batteryPercentageRemaining', this.onBatteryPercentageRemaining.bind(this));
+
     this.log('Reading attributes');
     await zclNode.endpoints[1].clusters.basic.readAttributes(['manufacturerName', 'modelId'])
       .catch((err) => {
@@ -76,12 +80,13 @@ class ZigbeeWaterTank extends ZigBeeDevice {
 
   onBatteryVoltageAttributeReport(batteryVoltage) {
     const parsedVoltage = batteryVoltage / 100 + 2;
-    let percentage = Math.round(6158.431 - 6178.737 * parsedVoltage + 1912.137 * (parsedVoltage ** 2) - 186.7824 * (parsedVoltage ** 3));
-    if (percentage > 100) percentage = 100;
-    if (percentage < 0) percentage = 0;
-    this.log('measure_battery | powerConfiguration - batteryVoltage (V): ', parsedVoltage);
-    this.setCapabilityValue('measure_battery', percentage).catch(this.error);
+    this.log('powerConfiguration - batteryVoltage (V): ', parsedVoltage);
     this.setCapabilityValue('measure_voltage', parsedVoltage).catch(this.error);
+  }
+
+  onBatteryPercentageRemaining(percentage) {
+    this.log('powerConfiguration - batteryPercentage (%): ', percentage);
+    this.setCapabilityValue('measure_battery', percentage).catch(this.error);
   }
 
   onTemperatureMeasuredAttributeReport(measuredValue) {
