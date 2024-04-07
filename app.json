@@ -29,6 +29,79 @@
   },
   "drivers": [
     {
+      "id": "hydroponic-controller",
+      "name": {
+        "en": "Zigbee Hydroponic Controller"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "auxiliary_output",
+        "water_pump",
+        "measure_battery",
+        "measure_voltage",
+        "measure_temperature",
+        "measure_humidity",
+        "float_switch",
+        "measure_conductivity",
+        "measure_ph"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/hydroponic-controller/assets/images/small.png",
+        "large": "/drivers/hydroponic-controller/assets/images/large.png",
+        "xlarge": "/drivers/hydroponic-controller/assets/images/xlarge.png"
+      },
+      "energy": {
+        "approximation": {
+          "usageOn": 0,
+          "usageOff": 0
+        }
+      },
+      "zigbee": {
+        "manufacturerName": "TELINK",
+        "productId": [
+          "TLSR82_5"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              1,
+              6,
+              15,
+              16,
+              1026,
+              1027,
+              1028,
+              1029,
+              1280
+            ],
+            "bindings": [
+              6,
+              15,
+              16,
+              1026,
+              1027,
+              1028,
+              1029,
+              1280
+            ]
+          }
+        },
+        "learnmode": {
+          "image": "/drivers/hydroponic-controller/assets/learnmode.svg",
+          "instruction": {
+            "en": "Long press the button on your device"
+          }
+        }
+      }
+    },
+    {
       "id": "watertank-controller",
       "name": {
         "en": "Zigbee Watertank Controller"
@@ -1238,6 +1311,21 @@
       "getable": true,
       "setable": false
     },
+    "auxiliary_output": {
+      "type": "boolean",
+      "title": {
+        "en": "Auxiliary Output"
+      },
+      "units": {
+        "en": "Status"
+      },
+      "desc": {
+        "en": "Auxiliary Binary Switch"
+      },
+      "getable": true,
+      "setable": true,
+      "uiQuickAction": false
+    },
     "dump_valve": {
       "type": "boolean",
       "title": {
@@ -1283,6 +1371,22 @@
       "setable": false,
       "insights": true,
       "icon": "/assets/capability_icons/holding-capacity.svg"
+    },
+    "measure_conductivity": {
+      "type": "number",
+      "title": {
+        "en": "Conductivity"
+      },
+      "units": {
+        "en": "mS/cm"
+      },
+      "desc": {
+        "en": "Water conductivity measurement"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/measure_ec.svg"
     },
     "measure_consumption_rate": {
       "type": "number",
@@ -1334,6 +1438,22 @@
       "setable": false,
       "insights": true,
       "icon": "/assets/capability_icons/depth.svg"
+    },
+    "measure_ph": {
+      "type": "number",
+      "title": {
+        "en": "pH"
+      },
+      "units": {
+        "en": ""
+      },
+      "desc": {
+        "en": "pH measurement"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/capability_icons/measure_ph.svg"
     },
     "measure_volume": {
       "type": "number",

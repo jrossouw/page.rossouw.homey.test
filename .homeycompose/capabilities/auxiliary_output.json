@@ -1,0 +1,15 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Auxiliary Output"
+  },
+  "units": {
+    "en": "Status"
+  },
+  "desc": {
+    "en": "Auxiliary Binary Switch"
+  },
+  "getable": true,
+  "setable": true,
+  "uiQuickAction": false
+}

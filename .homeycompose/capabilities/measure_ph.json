@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "pH"
+  },
+  "units": {
+    "en": ""
+  },
+  "desc": {
+    "en": "pH measurement"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/capability_icons/measure_ph.svg"
+}
